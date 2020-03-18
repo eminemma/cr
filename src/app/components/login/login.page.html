@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>logine</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="height: 60%;">
+   
+    <ion-card-content>
+      <ion-text color="secondary">
+        <div style="font-size: 60px;">Cruzate con tu media naranja</div>
+      </ion-text>    </ion-card-content>
+  </ion-card>
+  <section>
+  <ion-button color="favorite" expand="block" (click)="loginFacebook()"> <ion-img style="width: 10%;" src="assets/icon/icon-facebook.png"></ion-img>Facebook</ion-button>
+  <ion-button color="tertiary" expand="block">{{ 'uso-celular' | translate }}</ion-button>
+  </section>
+
+  <section style="text-align: center;">
+   
+  <p>
+    Al inscribirte, aceptás nuestras  <a routerLink="/condiciones">Condiciones Generales</a> de uso y <a routerLink="/politicas">Políticas</a> de privacidad.
+  </p>
+</section>
+</ion-content>

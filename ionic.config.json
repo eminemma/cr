@@ -1,0 +1,7 @@
+{
+  "name": "crush",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
