@@ -19,6 +19,16 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
+
+export class CustomHammerConfig extends HammerGestureConfig{
+  overrides = <any> {
+    swipe: { direction: Hammer.DIRECTION_ALL },
+  };
+}
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,7 +37,8 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(), 
     AppRoutingModule, 
     HttpClientModule,
@@ -44,7 +55,8 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook
+    Facebook,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig}
   ],
   bootstrap: [AppComponent]
 })
