@@ -1,0 +1,44 @@
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    overflow: hidden
+  }
+  li{
+   
+  }
+  li img{
+    width: 200px;
+  
+  }
+
+  .carousel-indicador{
+    position: absolute;
+    left: 96%;
+    top: 33%;
+  }
+
+  .indicador{
+    margin: 0 0 5px;
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 4px;
+    background: #dad8d8;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.26), 0 1px 1px 0 rgba(0,0,0,.12), 0 2px 1px -1px rgba(0,0,0,.08);
+  }
+
+.active {
+    background: #09f;
+    border: none;
+}
+
+.menu-like{
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  z-index: 99;
+  bottom:240px;
+  text-align: center;
+}

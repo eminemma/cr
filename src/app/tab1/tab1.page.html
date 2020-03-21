@@ -12,13 +12,7 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
-  <child-component></child-component>
+  <div *ngFor="let item of personas">
+  <child-component  [persona]="item" (persona_seleccionada) ="GetChildData($event)" ></child-component>
+  </div>
 </ion-content>

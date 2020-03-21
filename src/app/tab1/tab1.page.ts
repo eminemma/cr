@@ -1,50 +1,50 @@
-import { Component } from '@angular/core';
-import { trigger, keyframes, animate, transition, state,style } from '@angular/animations';
-import * as kf from './keyframes';
-import {ChildComponent} from './child';
+import { Component } from "@angular/core";
+import { NaranjaService } from "../services/naranja.service";
+import { LoadingController } from "@ionic/angular";
+import { interval, Observable } from "rxjs";
+import { filter, map } from "rxjs/operators";
+import { Persona } from "../services/Persona";
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
-  animations: [
-    trigger('cardAnimator', [
-      transition('* => slideOutLeft', animate(1000, keyframes(kf.slideOutLeft))),
-      transition('* => slideOutRight', animate(1000, keyframes(kf.slideOutRight)))
-    ]),
-    trigger('openClose', [
-      state('open', style({
-          height: '*',
-          opacity: 1,
-      })),
-      state('right', style({
-         transform: 'translate3d(100%, 0, 0)',
-          opacity: 0
-      })),
-      transition('open => right', [
-          animate('0.55s')
-      ]),
-  ]),
-  ]
+  selector: "app-tab1",
+  templateUrl: "tab1.page.html",
+  styleUrls: ["tab1.page.scss"]
 })
 export class Tab1Page {
-  animationState: string;
+  personas: Array<Persona>;
 
-  showCardBody = true;
+  constructor(
+    private naranjaService: NaranjaService,
+    private loadingController: LoadingController
+  ) {}
 
-  constructor() {}
-  startAnimation(state) {
-    if (!this.animationState) {
-      this.animationState = state;
-    }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: "Please wait...",
+      translucent: true
+    });
+    return await loading.present();
   }
 
-  resetAnimationState() {
-    this.animationState = '';
+  ngOnInit() {
+    this.presentLoading();
+    this.naranjaService.get().subscribe((personas: Persona[]) => {
+      this.personas = personas;
+      this.loadingController.dismiss();
+    });
+
+    interval(1000).subscribe(() => {
+      if (this.personas.length == 0) {
+        this.presentLoading();
+        this.naranjaService.get().subscribe((personas: Persona[]) => {
+          this.personas = personas;
+          this.loadingController.dismiss();
+        });
+      }
+    });
   }
-
-  
-
-  showDetails() {
-    this.showCardBody = !this.showCardBody;
-}
+  GetChildData(persona) {
+    console.log(persona);
+    this.personas = this.personas.filter(p => p.id !== persona.id);
+    console.log(this.personas);
+  }
 }
