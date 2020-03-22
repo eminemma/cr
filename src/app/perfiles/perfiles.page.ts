@@ -1,15 +1,15 @@
-import { Component } from "@angular/core";
-import { NaranjaService } from "../services/naranja.service";
-import { LoadingController } from "@ionic/angular";
-import { interval, Observable } from "rxjs";
-import { filter, map } from "rxjs/operators";
-import { Persona } from "../services/Persona";
+import { Component } from '@angular/core';
+import { NaranjaService } from '../services/naranja.service';
+import { LoadingController } from '@ionic/angular';
+import { interval, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { Persona } from '../services/Persona';
 @Component({
-  selector: "app-tab1",
-  templateUrl: "tab1.page.html",
-  styleUrls: ["tab1.page.scss"]
+  selector: 'app-tab1',
+  templateUrl: 'perfiles.page.html',
+  styleUrls: ['perfiles.page.scss']
 })
-export class Tab1Page {
+export class PerfilesPage {
   personas: Array<Persona>;
 
   constructor(

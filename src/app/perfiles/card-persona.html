@@ -1,11 +1,10 @@
-
-  <ion-card
-    [@slideLike]="animateLike ? 'open' : 'right'"
-    [@slideNotLike]="animateNotLike ? 'open' : 'left'"
-    
-    (@slideLike.done)="finishAnimationLike()"
-    (@slideNotLike.done)="finishAnimationNotLike()"
-    
+  <p #para></p>
+  <ion-card #card
+  [@slideLike]="animateLike ? 'open' : 'right'"
+  [@slideNotLike]="animateNotLike ? 'open' : 'left'"
+  
+  (@slideLike.done)="finishAnimationLike()"
+  (@slideNotLike.done)="finishAnimationNotLike()"    
     style="position: absolute;"
   >
     <ul>

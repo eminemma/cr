@@ -3,8 +3,8 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
-import { ChildComponent } from './child';
+import { PerfilesPage } from './perfiles.page';
+import { ChildComponent } from './card-persona';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 @NgModule({
@@ -13,8 +13,8 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: Tab1Page }])
+    RouterModule.forChild([{ path: '', component: PerfilesPage }])
   ],
-  declarations: [Tab1Page,ChildComponent]
+  declarations: [PerfilesPage, ChildComponent]
 })
 export class Tab1PageModule {}
