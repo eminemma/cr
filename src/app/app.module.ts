@@ -24,11 +24,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import * as Hammer from 'hammerjs';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Crop } from '@ionic-native/crop/ngx';
+import { File } from '@ionic-native/file/ngx';
+
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
     swipe: { direction: Hammer.DIRECTION_ALL },
   };
 }
+
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -54,9 +62,13 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
+    Crop,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Facebook,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig}
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig},
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })

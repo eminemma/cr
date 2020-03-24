@@ -13,5 +13,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div padding>    
+    <div id="map_canvas" style="width:500px; height:500px; z-index: 1 !important; overflow: auto !important;">
+      <ion-button ion-button (click)="onButtonClick()">Demo</ion-button>
+    </div>
+  </div>
 </ion-content>

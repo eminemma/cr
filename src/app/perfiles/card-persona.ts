@@ -1,4 +1,4 @@
-import { Component, Input,EventEmitter, Output  } from '@angular/core';
+import { Component, Input, EventEmitter, Output  } from '@angular/core';
 import { trigger, keyframes, animate, transition, state,style } from '@angular/animations';
 import { AlertService } from 'src/app/services/alert.service';
 import { Gesture, GestureConfig, createGesture } from '@ionic/core';

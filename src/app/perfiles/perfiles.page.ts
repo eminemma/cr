@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { interval, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Persona } from '../services/Persona';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'perfiles.page.html',
@@ -11,10 +12,12 @@ import { Persona } from '../services/Persona';
 })
 export class PerfilesPage {
   personas: Array<Persona>;
+  
 
   constructor(
     private naranjaService: NaranjaService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+  //  private geolocation: Geolocation
   ) {}
 
   async presentLoading() {
@@ -25,7 +28,7 @@ export class PerfilesPage {
     return await loading.present();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.presentLoading();
     this.naranjaService.get().subscribe((personas: Persona[]) => {
       this.personas = personas;

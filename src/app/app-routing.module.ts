@@ -26,6 +26,18 @@ const routes: Routes = [
     path: 'politicas',
     loadChildren: () => import('./components/politicas/politicas.module').then( m => m.PoliticasPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'crear1',
+    loadChildren: () => import('./components/usuario/crear1/crear1.module').then( m => m.Crear1PageModule)
+  },
+  {
+    path: 'crear2',
+    loadChildren: () => import('./components/usuario/crear2/crear2.module').then( m => m.Crear2PageModule)
+  },
+  {
+    path: 'crear3',
+    loadChildren: () => import('./components/usuario/crear3/crear3.module').then( m => m.Crear3PageModule)
   }
 ];
 @NgModule({

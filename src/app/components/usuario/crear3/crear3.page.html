@@ -1,0 +1,14 @@
+<ion-content>
+  <h1>Agregá tus fotos más lindas de vos</h1>
+  <h6>¿Sabías que un perfil con 3 fotos tiene 5 veces más probabilidades de crush?</h6>
+  <div style="width: 100%;">
+    <div class="small-photo" *ngFor="let imagen of imagenes; let i = index" >
+      <camera-image-component [indexImagen]="i" [indexHabilitar]="indexHabilitar" [imagenes]="imagenes" (indexHabilitarNuevo) ="setHabilitarIndex($event)">   
+      </camera-image-component>
+    <div style="position: relative;top: 55%;width: 21%;" *ngIf="imagen.src !== undefined ">
+        <ion-button color="primary" (click)="eliminarImagen(i);" >Eliminar</ion-button>   
+    </div>  
+    </div>    
+  </div>
+</ion-content>
+

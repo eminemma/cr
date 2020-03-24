@@ -12,7 +12,8 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <div *ngFor="let item of personas">
-  <card-persona-component  [persona]="item" (persona_seleccionada) ="GetChildData($event)" ></card-persona-component>
+  <card-persona-component  [persona]="item" (persona_seleccionada) ="GetChildData($event)"></card-persona-component>
   </div>
 </ion-content>
