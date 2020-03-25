@@ -15,10 +15,9 @@ export class CameraImagePage implements OnInit {
   @Input() indexImagen;
   @Input() imagenes;
   @Input() indexHabilitar;
-  @Output() indexHabilitarNuevo:EventEmitter<Object>= new EventEmitter();  
+  @Output() indexHabilitarNuevo:EventEmitter<Object>= new EventEmitter();
   imagenCamera: ImagenCamera;
-  
-  
+
   constructor(
     public actionSheetController: ActionSheetController,
     private camera: Camera,
@@ -32,10 +31,10 @@ export class CameraImagePage implements OnInit {
 
 
   showCroppedImage(ImagePath){
-    var copyPath = ImagePath;
-    var splitPath = copyPath.split('/');
-    var imageName = splitPath[splitPath.length-1];
-    var filePath = ImagePath.split(imageName)[0];
+    const copyPath = ImagePath;
+    const splitPath = copyPath.split('/');
+    const imageName = splitPath[splitPath.length-1];
+    const filePath = ImagePath.split(imageName)[0];
 
     this.file.readAsDataURL(filePath,imageName).then(base64 => {
          this.imagenCamera.src = base64;
@@ -51,7 +50,7 @@ export class CameraImagePage implements OnInit {
   }
   async accionesImagen() {
     console.log('index 1' + this.indexHabilitar);
-    if(this.indexHabilitar == this.indexImagen){
+    if (this.indexHabilitar === this.indexImagen) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Fotos',
       buttons: [{
@@ -60,6 +59,7 @@ export class CameraImagePage implements OnInit {
         handler: () => {
           const options: CameraOptions = {
             quality: 100,
+           // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             destinationType: this.camera.DestinationType.FILE_URI,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE
@@ -83,7 +83,25 @@ export class CameraImagePage implements OnInit {
       }, {
         text: 'Elegir desde Mis Fotos',
         handler: () => {
-          console.log('Share clicked');
+          const options: CameraOptions = {
+            quality: 100,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: this.camera.DestinationType.FILE_URI,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+          };
+          this.camera.getPicture(options).then((imageData) => {
+           // imageData is either a base64 encoded string or a file URI
+           // If it's base64 (DATA_URL):
+           let base64Image = 'data:image/jpeg;base64,' + imageData;
+           this.imagenCamera.src = base64Image;
+           console.log('index image'+this.indexImagen);
+           this.imagenes[this.indexImagen] = this.imagenCamera;
+           this.indexHabilitar = this.indexImagen + 1;
+           this.indexHabilitarNuevo.emit(this.indexHabilitar); 
+          }, (err) => {
+           // Handle error
+          });
         }
       }, {
         text: 'Elegir desde Mis Fotos',
@@ -112,5 +130,24 @@ export class CameraImagePage implements OnInit {
     await actionSheet.present();
   }}
 
- 
+  eliminarImagen(){
+    this.imagenes.splice(this.indexImagen, 1);
+    for (let i = 0; i < 6; i++) {
+      if (this.imagenes[i] === undefined) {
+        this.imagenes[i] = new ImagenCamera();
+      }
+    }
+
+    this.habilitarBoton();
+  }
+
+  habilitarBoton() {
+    for (let i = 0; i < this.imagenes.length; i++) {
+      if (this.imagenes[i].src === undefined) {
+        this.indexHabilitar = i;
+        this.indexHabilitarNuevo.emit(this.indexHabilitar); 
+        break;
+      }
+    }
+  }
 }

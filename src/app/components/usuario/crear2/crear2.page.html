@@ -9,7 +9,7 @@
 <ion-content>
   <h1>Ingresa tu direccion de correo electronico</h1>
   <ion-item>
-    <ion-input placeholder="Direccion de Correo"></ion-input>
+    <ion-input placeholder="Direccion de Correo" [(ngModel)]="usuario.correo"></ion-input>
   </ion-item>
   <section>
     <h6>
@@ -18,7 +18,7 @@
   </h6>
   </section>
   <section>
-    <ion-button expand="block">Continuar</ion-button>
+    <ion-button expand="block" (click)="siguiente()">Continuar</ion-button>
   </section>
   </ion-content>
   

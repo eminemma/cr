@@ -1,14 +1,22 @@
 <ion-content>
   <h1>Agregá tus fotos más lindas de vos</h1>
-  <h6>¿Sabías que un perfil con 3 fotos tiene 5 veces más probabilidades de crush?</h6>
-  
-    <div *ngFor="let imagen of imagenes; let i = index" style="width: 20%;float: left;
-    margin-top: 10px;
-    margin-left: 10px;height: 180px;" >
-      <camera-image-component class="small-photo" [indexImagen]="i" [indexHabilitar]="indexHabilitar" [imagenes]="imagenes" (indexHabilitarNuevo) ="setHabilitarIndex($event)">   
-      </camera-image-component>
-      <ion-button color="danger" expand="full" (click)="eliminarImagen(i);" *ngIf="imagen.src !== undefined "><ion-icon name="trash"></ion-icon></ion-button>   
-      
-    </div>  
-</ion-content>
+  <h6>
+    ¿Sabías que un perfil con 3 fotos tiene 5 veces más probabilidades de crush?
+  </h6>
 
+  <div
+    *ngFor="let imagen of imagenes; let i = index"
+    style="width: 20%;float: left;
+    margin-top: 10px;
+    margin-left: 10px;height: 180px;"
+  >
+    <camera-image-component
+      class="small-photo"
+      [indexImagen]="i"
+      [indexHabilitar]="indexHabilitar"
+      [imagenes]="imagenes"
+      (indexHabilitarNuevo)="setHabilitarIndex($event)">
+    </camera-image-component>
+   
+  </div>
+</ion-content>
