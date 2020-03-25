@@ -1,4 +1,4 @@
 <div class="small-photo" (click)="accionesImagen();" >
-    <img src="{{imagenes[indexImagen].src}}" alt="">
-   
+    <img src="{{imagenes[indexImagen].src}}" alt="">   
 </div>
+<ion-button color="primary" expand="full" (click)="accionesImagen();" *ngIf="imagenes[indexImagen].src === undefined && indexHabilitar == indexImagen "><ion-icon name="add-circle"></ion-icon></ion-button>   

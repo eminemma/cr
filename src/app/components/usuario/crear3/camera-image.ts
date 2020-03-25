@@ -39,16 +39,18 @@ export class CameraImagePage implements OnInit {
 
     this.file.readAsDataURL(filePath,imageName).then(base64 => {
          this.imagenCamera.src = base64;
+         console.log('index image'+this.indexImagen);
          this.imagenes[this.indexImagen] = this.imagenCamera;
-         this.indexHabilitar = this.indexHabilitar + 1;
+         this.indexHabilitar = this.indexImagen + 1;
          this.indexHabilitarNuevo.emit(this.indexHabilitar); 
          console.log('Actualizacion de imagenes ' + this.imagenes);
-        console.log('Nuevas Imagen seleccionada: ' + this.imagenCamera.src);
+       // console.log('Nuevas Imagen seleccionada: ' + this.imagenCamera.src);
     }, error => {
       alert('Error in showing image' + error);
     });
   }
   async accionesImagen() {
+    console.log('index 1' + this.indexHabilitar);
     if(this.indexHabilitar == this.indexImagen){
     const actionSheet = await this.actionSheetController.create({
       header: 'Fotos',
