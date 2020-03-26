@@ -30,6 +30,11 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Crop } from '@ionic-native/crop/ngx';
 import { File } from '@ionic-native/file/ngx';
 
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
+
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
     swipe: { direction: Hammer.DIRECTION_ALL },
@@ -51,7 +56,10 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule, 
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
+    AngularFireAuthModule,    
+    AngularFireDatabaseModule,
+    ReactiveFormsModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -7,9 +7,10 @@
 
 </ion-toolbar>
 <ion-content>
+  <form class="container" [formGroup]="usuarioForm" (submit)="siguiente()" #myform="ngForm">
   <h1>Ingresa tu direccion de correo electronico</h1>
   <ion-item>
-    <ion-input placeholder="Direccion de Correo" [(ngModel)]="usuario.correo"></ion-input>
+    <ion-input formControlName="direccion" placeholder="Direccion de Correo" ></ion-input>
   </ion-item>
   <section>
     <h6>
@@ -18,7 +19,8 @@
   </h6>
   </section>
   <section>
-    <ion-button expand="block" (click)="siguiente()">Continuar</ion-button>
+    <ion-button type="submit" expand="block" [disabled]="!usuarioForm.valid">Continuar</ion-button>
   </section>
+</form>
   </ion-content>
   

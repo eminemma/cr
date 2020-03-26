@@ -20,6 +20,7 @@ export class LoginServiceService {
     private router: Router) { }
 
   loginFacebook() {
+    
     this.alertService.presentToast('Login');
     this.facebook
       .login(['public_profile', 'email'])

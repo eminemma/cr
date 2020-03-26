@@ -1,13 +1,14 @@
 <ion-content>
 <h1>¿Con quien te queres cruzar?</h1>
+<form class="container" [formGroup]="usuarioForm" (submit)="siguiente()" #myform="ngForm">
 <ion-list>
   <ion-item>
     <ion-label>Hombre</ion-label>
-    <ion-toggle slot="start" name="sexo" [(ngModel)]="usuario.hombre" color="light" checked></ion-toggle>
+    <ion-toggle slot="start" formControlName="sexoHombre" name="sexoHombre" color="light" checked="false" (ionChange)="validarSeleccionarSexo()"></ion-toggle>
   </ion-item>
   <ion-item>
     <ion-label>Mujer</ion-label>
-    <ion-toggle slot="start" name="sexo" [(ngModel)]="usuario.mujer" color="light" checked></ion-toggle>
+    <ion-toggle slot="start" formControlName="sexoMujer"  name="sexoMujer"  color="light" checked="false" (ionChange)="validarSeleccionarSexo()"></ion-toggle>
   </ion-item>
 </ion-list>
 <section>
@@ -17,6 +18,10 @@
 </h6>
 </section>
 <section>
-  <ion-button expand="block" (click)="siguiente()">Continuar</ion-button>
+  <p color="danger" *ngIf="usuarioForm.get('sexoHombre').hasError('required')">Por favor ingresa con que persona quieres vincularte </p>
 </section>
+<section>
+  <ion-button type="submit" expand="block"  [disabled]="!usuarioForm.valid">Continuar</ion-button>
+</section>
+</form>
 </ion-content>

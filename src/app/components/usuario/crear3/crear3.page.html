@@ -14,9 +14,12 @@
       class="small-photo"
       [indexImagen]="i"
       [indexHabilitar]="indexHabilitar"
-      [imagenes]="imagenes"
+      [imagenes]="this.usuario.imagenes"
       (indexHabilitarNuevo)="setHabilitarIndex($event)">
     </camera-image-component>
    
   </div>
+  <section>
+    <ion-button expand="block" (click)="finalizarCreacionUsuario()">Continuar</ion-button>
+  </section>
 </ion-content>

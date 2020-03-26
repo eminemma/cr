@@ -5,9 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { Crear3PageRoutingModule } from './crear3-routing.module';
-
+import { AngularFireModule } from '@angular/fire';
 import { Crear3Page } from './crear3.page';
 import { CameraImagePage } from './camera-image';
+import { environment } from '../../../../environments/environment';
 @NgModule({
   imports: [
     CommonModule,
