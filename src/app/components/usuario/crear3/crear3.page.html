@@ -5,7 +5,7 @@
   </h6>
 
   <div
-    *ngFor="let imagen of imagenes; let i = index"
+    *ngFor="let imagen of usuario.imagenes; let i = index"
     style="width: 20%;float: left;
     margin-top: 10px;
     margin-left: 10px;height: 180px;"
@@ -15,6 +15,7 @@
       [indexImagen]="i"
       [indexHabilitar]="indexHabilitar"
       [imagenes]="this.usuario.imagenes"
+      [usuario]="usuario"
       (indexHabilitarNuevo)="setHabilitarIndex($event)">
     </camera-image-component>
    

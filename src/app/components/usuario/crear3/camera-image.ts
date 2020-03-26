@@ -5,6 +5,7 @@ import { Crop } from '@ionic-native/crop/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ImagenCamera } from '../../../services/ImagenCamera';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'camera-image-component',
@@ -12,6 +13,7 @@ import { ImagenCamera } from '../../../services/ImagenCamera';
   styleUrls: ['./camera-image.css'],
 })
 export class CameraImagePage implements OnInit {
+  @Input() usuario;
   @Input() indexImagen;
   @Input() imagenes;
   @Input() indexHabilitar;
@@ -22,7 +24,8 @@ export class CameraImagePage implements OnInit {
     public actionSheetController: ActionSheetController,
     private camera: Camera,
     private crop: Crop,
-    private file: File) { }
+    private file: File,
+    private route: Router) { }
 
   ngOnInit() {
     this.imagenCamera = new ImagenCamera();
@@ -57,7 +60,8 @@ export class CameraImagePage implements OnInit {
         text: 'Tomar una foto',
         role: 'destructive',
         handler: () => {
-          const options: CameraOptions = {
+          this.route.navigate(['/cropp'], { state:{usuario: this.usuario, indexImage: this.indexImagen}});
+          /*const options: CameraOptions = {
             quality: 100,
            // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             destinationType: this.camera.DestinationType.FILE_URI,
@@ -78,12 +82,13 @@ export class CameraImagePage implements OnInit {
           );
           }, (err) => {
            // Handle error
-          });
+          });*/
         }
       }, {
         text: 'Elegir desde Mis Fotos',
         handler: () => {
-          const options: CameraOptions = {
+          this.route.navigate(['/cropp'], { state:{usuario: this.usuario, indexImage: this.indexImagen, esGalleria: 'true'}});
+          /*const options: CameraOptions = {
             quality: 100,
             sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             destinationType: this.camera.DestinationType.FILE_URI,
@@ -101,7 +106,7 @@ export class CameraImagePage implements OnInit {
            this.indexHabilitarNuevo.emit(this.indexHabilitar); 
           }, (err) => {
            // Handle error
-          });
+          });*/
         }
       }, {
         text: 'Elegir desde Mis Fotos',
@@ -132,7 +137,7 @@ export class CameraImagePage implements OnInit {
 
   eliminarImagen(){
     this.imagenes.splice(this.indexImagen, 1);
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 12; i++) {
       if (this.imagenes[i] === undefined) {
         this.imagenes[i] = new ImagenCamera();
       }

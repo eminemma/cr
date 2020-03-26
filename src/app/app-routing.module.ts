@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'crear3',
     loadChildren: () => import('./components/usuario/crear3/crear3.module').then( m => m.Crear3PageModule)
+  },
+  {
+    path: 'cropp',
+    loadChildren: () => import('./components/cropp/cropp.module').then( m => m.CroppPageModule)
   }
 ];
 @NgModule({

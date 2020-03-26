@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { ImagenCamera } from '../../../services/ImagenCamera';
 import { CameraImagePage } from './camera-image'; 
 import { Usuario } from 'src/app/services/Usuario';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
+import { ImagenCamera } from '../../../services/ImagenCamera';
 
 @Component({
   selector: 'app-crear3',
@@ -12,28 +12,24 @@ import { UsuarioService } from '../../../services/usuario.service';
 })
 export class Crear3Page implements OnInit {
   usuario: Usuario;
-  imagenes: Array<ImagenCamera>;
   indexHabilitar: number = 0;
   constructor(
     private router: Router,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private route: ActivatedRoute
   ){
-    this.usuario =  <Usuario> this.router.getCurrentNavigation().extras.state;
+    this.usuario =  <Usuario> this.router.getCurrentNavigation().extras.state.usuario;
+    
   }
 
   @ViewChild(CameraImagePage,{static : false}) child: CameraImagePage; 
 
-  ngOnInit() {
-    
-    this.imagenes = [
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera()
-    ];
-    this.usuario.imagenes = this.imagenes;
+  ngOnInit() { 
+    console.log('again');
+    this.route.params.subscribe(val => {
+      
+      this.habilitarBoton();
+    });
   }
   setHabilitarIndex(indexHabilitar){
     this.indexHabilitar = indexHabilitar;
@@ -44,6 +40,17 @@ export class Crear3Page implements OnInit {
     this.usuarioService.crearUsuario(this.usuario).then(()=>{
       this.router.navigate(['./principal']);
     });
+  }
+
+  habilitarBoton() {
+  
+    for (let i = 0; i < this.usuario.imagenes.length; i++) {
+      console.log('pasaa'+i);
+      if (this.usuario.imagenes[i].src === undefined) {
+        this.indexHabilitar = i;
+        break;
+      }
+    }
   }
 }
 

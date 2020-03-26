@@ -5,16 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { Crear3PageRoutingModule } from './crear3-routing.module';
-import { AngularFireModule } from '@angular/fire';
 import { Crear3Page } from './crear3.page';
 import { CameraImagePage } from './camera-image';
-import { environment } from '../../../../environments/environment';
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    Crear3PageRoutingModule
+    Crear3PageRoutingModule,
+    ImageCropperModule
   ],
   declarations: [Crear3Page,CameraImagePage]
 })

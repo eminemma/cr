@@ -29,7 +29,7 @@ export class Crear2Page implements OnInit {
   siguiente(){
     if (this.usuarioForm.dirty && this.usuarioForm.valid) {
       this.usuario.correo = this.usuarioForm.controls['direccion'].value;
-      this.router.navigate(['./crear3'], { state: this.usuario });
+      this.router.navigate(['./crear3'], { state: {usuario:this.usuario} });
     }
   }
 

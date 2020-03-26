@@ -3,6 +3,8 @@ import { Usuario } from '../../../services/Usuario';
 import { Router } from '@angular/router';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ImagenCamera } from '../../../services/ImagenCamera';
+
 @Component({
   selector: 'app-crear1',
   templateUrl: './crear1.page.html',
@@ -10,6 +12,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class Crear1Page implements OnInit {
   usuario: Usuario;
+  
+  imagenes: Array<ImagenCamera>;
   private usuarioForm : FormGroup;
   
     constructor( 
@@ -18,6 +22,23 @@ export class Crear1Page implements OnInit {
       private fireAuth: AngularFireAuth,
     ) {
     this.usuario = new Usuario();
+    this.imagenes = [
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera(),
+      new ImagenCamera()
+    ];
+    
+    this.usuario.imagenes = this.imagenes;
+
     this.usuarioForm = this.formBuilder.group({
       sexoHombre: [false, Validators.requiredTrue],
       sexoMujer: [false, Validators.requiredTrue]

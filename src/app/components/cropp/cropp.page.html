@@ -1,0 +1,24 @@
+<!--<input type="file" *ngIf="esGalleria" (change)="fileChangeEvent($event)" />-->
+
+<!--[imageBase64] = "myImage"-->
+<!--[imageChangedEvent]="imageChangedEvent"-->
+<image-cropper *ngIf="esGalleria"
+    [imageBase64] = "myImage"     
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 5"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    outputType="base64"
+    hideResizeSquares="true"
+></image-cropper>
+
+<image-cropper *ngIf="!esGalleria"
+    [imageBase64] = "myImage"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 5"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    outputType="base64"
+    hideResizeSquares="true"
+></image-cropper>
+<ion-button color="primary" (click)="save()">Primary</ion-button>
