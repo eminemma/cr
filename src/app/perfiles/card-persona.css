@@ -35,10 +35,9 @@ ul {
 }
 
 .menu-like{
-  width: 100%;
-  height: 60px;
-  position: absolute;
-  z-index: 99;
-  bottom:240px;
   text-align: center;
+}
+
+.card{
+  position: absolute;
 }

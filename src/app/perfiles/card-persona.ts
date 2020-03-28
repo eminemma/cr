@@ -1,8 +1,8 @@
-import { Component, Input, EventEmitter, Output  } from '@angular/core';
+import { Component, Input, EventEmitter, Output,ElementRef, Renderer  } from '@angular/core';
 import { trigger, keyframes, animate, transition, state,style } from '@angular/animations';
 import { AlertService } from 'src/app/services/alert.service';
 import { Gesture, GestureConfig, createGesture } from '@ionic/core';
-
+import { DomController } from '@ionic/angular';
 @Component({
   selector: 'card-persona-component',
   templateUrl: 'card-persona.html',
@@ -45,7 +45,14 @@ export class ChildComponent {
     animateUp = true;
     @Input() persona;
     @Output() persona_seleccionada:EventEmitter<Object>= new EventEmitter();  
-
+    x = 0;
+    y = 0;
+    left = '';
+    top = '';
+    title = 'Drag Me!';
+  
+    startX = 0;
+    startY = 0;
     /*slideItems = [
       { src: 'https://placeimg.com/600/600/any', title: 'Title 1' },
       { src: 'https://placeimg.com/600/600/nature', title: 'Title 2' },
@@ -55,11 +62,66 @@ export class ChildComponent {
     ];*/
 
     constructor(
-        private alertService: AlertService
+        private alertService: AlertService,
+        public element: ElementRef, 
+        public renderer: Renderer,
+         public domCtrl: DomController
     ) {
-        console.log('Pasaa');
     }
 
+    ngAfterViewInit() {
+
+
+        let hammer = new window['Hammer'](this.element.nativeElement);
+
+        hammer.on('pan', (ev) => {
+            console.log('pan');
+            this.handlePan(ev);
+        });
+
+        hammer.on('panend', (ev) => {
+            console.log('panend');
+            this.handlePanEnd(ev);
+        });
+        
+        
+
+    }
+    handlePan(ev){
+        console.log('drag');
+        let deltaX = ev.deltaX;
+        let deltaY = ev.deltaY;
+        
+        this.domCtrl.write(() => {
+            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration','0s');
+            this.renderer.setElementStyle(this.element.nativeElement, 'transform',`translate(${deltaX}px,${deltaY}px)`);
+        });
+
+    }
+
+    handlePanEnd(ev){
+        console.log('termina');
+        let deltaX = 0;
+        let deltaY = 0;
+
+        this.domCtrl.write(() => {
+            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration','0.55s');
+            this.renderer.setElementStyle(this.element.nativeElement, 'transform',`translate(${deltaX}px,${deltaY}px)`);
+        });
+
+    }
+  
+    onPan(event: any): void {
+        event.preventDefault();
+        this.x = this.startX + event.deltaX;
+        this.y = this.startY + event.deltaY;
+
+        this.left = this.x + "px";
+        this.top = this.y + "px";
+        console.log('Pan');
+        console.log(this.x );
+        console.log(this.y );
+      }
     showNextImage() {
         
         if (this.counter < this.persona.images.length -1) {

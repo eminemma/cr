@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../../../services/Usuario';
+import { Usuario } from 'src/app/models/Usuario';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,12 +10,12 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class Crear2Page implements OnInit {
   usuario: Usuario;
-  private usuarioForm : FormGroup;
+  private usuarioForm: FormGroup;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder
-  ) {    
-    this.usuario =  <Usuario> this.router.getCurrentNavigation().extras.state;
+  ) {
+    this.usuario =  this.router.getCurrentNavigation().extras.state as Usuario;
 
     this.usuarioForm = this.formBuilder.group({
       direccion: ['', this.emailValidator]
@@ -23,7 +23,6 @@ export class Crear2Page implements OnInit {
    }
 
   ngOnInit() {
-    
   }
 
   siguiente(){

@@ -1,7 +1,11 @@
 <ion-content>
-<h1>¿Con quien te queres cruzar?</h1>
+
 <form class="container" [formGroup]="usuarioForm" (submit)="siguiente()" #myform="ngForm">
 <ion-list>
+  <ion-item>
+    <ion-label>Bienvenido {{usuario.nombre}}</ion-label>
+  </ion-item>
+  <h1>¿Con quien te queres cruzar?</h1>
   <ion-item>
     <ion-label>Hombre</ion-label>
     <ion-toggle slot="start" formControlName="sexoHombre" name="sexoHombre" color="light" checked="false" (ionChange)="validarSeleccionarSexo()"></ion-toggle>

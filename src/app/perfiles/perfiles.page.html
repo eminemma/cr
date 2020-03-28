@@ -14,6 +14,6 @@
   </ion-header>
 
   <div *ngFor="let item of personas">
-  <card-persona-component  [persona]="item" (persona_seleccionada) ="GetChildData($event)"></card-persona-component>
+  <card-persona-component style="position: absolute;width:100%;"  [persona]="item" (persona_seleccionada) ="GetChildData($event)"></card-persona-component>
   </div>
 </ion-content>

@@ -1,15 +1,16 @@
-  <p #para></p>
-  <ion-card #card
+ <ion-card class="card"
   [@slideLike]="animateLike ? 'open' : 'right'"
   [@slideNotLike]="animateNotLike ? 'open' : 'left'"
   
   (@slideLike.done)="finishAnimationLike()"
   (@slideNotLike.done)="finishAnimationNotLike()"    
-    style="position: absolute;"
+    
+    
   >
     <ul>
       <li *ngFor="let item of persona.images;let i = index">
-        <img
+     
+        <img 
           *ngIf="i == counter"
           (swiperight)="startAnimationLike()"
           (swipeleft)="startAnimationNotLike()"

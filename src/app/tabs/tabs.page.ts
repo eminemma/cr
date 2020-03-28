@@ -15,12 +15,11 @@ export class TabsPage {
     private fireAuth: AngularFireAuth,
     private usuarioService: UsuarioService
   ) {
-    this.usuarioService.getUserDetails(this.fireAuth.auth.currentUser.uid).subscribe(done => {      
-      console.log(typeof done);
-      if(done == null || typeof done !== 'object')
+    this.usuarioService.getUserDetails(this.fireAuth.auth.currentUser.uid).subscribe(done => {
+      if (done == null || typeof done !== 'object') {
         this.router.navigate(['./crear1']);
-    })
-    
+      }
+    });
   }
 
 }

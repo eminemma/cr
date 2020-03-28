@@ -34,7 +34,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../components/usuario/crear3/crear3.module').then(m => m.Crear3PageModule)
+              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
           }
         ]
       },

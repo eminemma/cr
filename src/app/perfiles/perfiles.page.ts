@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NaranjaService } from '../services/naranja.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingService } from 'src/app/services/loading.service';
 import { interval, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Persona } from '../services/Persona';
+import { Persona } from 'src/app/models/Persona';
 
 @Component({
   selector: 'app-tab1',
@@ -16,38 +16,28 @@ export class PerfilesPage {
 
   constructor(
     private naranjaService: NaranjaService,
-    private loadingController: LoadingController,
+    private loadingService: LoadingService,
   //  private geolocation: Geolocation
   ) {}
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: "Please wait...",
-      translucent: true
-    });
-    return await loading.present();
-  }
-
   async ngOnInit() {
-    this.presentLoading();
+    this.loadingService.Loading();
     this.naranjaService.get().subscribe((personas: Persona[]) => {
       this.personas = personas;
-      this.loadingController.dismiss();
+      this.loadingService.close();
     });
 
     interval(1000).subscribe(() => {
       if (this.personas.length == 0) {
-        this.presentLoading();
+        this.loadingService.Loading();
         this.naranjaService.get().subscribe((personas: Persona[]) => {
           this.personas = personas;
-          this.loadingController.dismiss();
+          this.loadingService.close();
         });
       }
     });
   }
   GetChildData(persona) {
-    console.log(persona);
     this.personas = this.personas.filter(p => p.id !== persona.id);
-    console.log(this.personas);
   }
 }
