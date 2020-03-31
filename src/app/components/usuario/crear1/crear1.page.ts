@@ -29,6 +29,7 @@ export class Crear1Page implements OnInit {
     this.usuario.hombre = false;
     this.usuario.mujer = false;
     this.usuario.distanciaBusqueda = 100;
+    this.usuario.edadBusqueda = 70;
     this.imagenes = [
       new ImagenCamera(),
       new ImagenCamera(),

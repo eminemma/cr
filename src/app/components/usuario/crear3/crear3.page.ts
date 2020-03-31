@@ -3,6 +3,9 @@ import { CameraImagePage } from './camera-image';
 import { Usuario } from 'src/app/models/Usuario';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EnvService } from 'src/app/services/env.service';
 
 @Component({
   selector: 'app-crear3',
@@ -15,7 +18,10 @@ export class Crear3Page implements OnInit {
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fireAuth: AngularFireAuth,
+    private env: EnvService,
+    private http: HttpClient
   ) {
     this.usuario =   this.router.getCurrentNavigation().extras.state.usuario as Usuario;
     this.indexHabilitar = 0;
@@ -34,9 +40,17 @@ export class Crear3Page implements OnInit {
 
 
   finalizarCreacionUsuario() {
-    this.usuarioService.crearUsuario(this.usuario).then(() => {
-      this.router.navigate(['./principal']);
+    this.fireAuth.auth.currentUser.getIdToken(true)
+    .then((token) => {
+      localStorage.setItem('token',token);
     });
+    this.usuarioService.crearUsuario(this.usuario).subscribe(
+      done => {
+          if(done.error === false) {
+            this.router.navigate(['./principal']);
+          }
+        }
+      );
   }
 
   habilitarBoton() {

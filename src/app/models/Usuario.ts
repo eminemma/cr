@@ -5,6 +5,9 @@ export class Usuario {
     public hombre: boolean;
     public correo: string;
     public imagenes: Array<ImagenCamera>;
-    public distanciaBusqueda: number
     public nombre: string;
+
+    // Parametros de busqueda
+    public distanciaBusqueda: number;
+    public edadBusqueda: number;
 }

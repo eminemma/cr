@@ -11,7 +11,7 @@ export class LoadingService {
 
   async Loading() {
     const loading = await this.loadingController.create({
-      message: "Please wait...",
+      message: "Buscando una naranja...",
       translucent: true
     });
     return await loading.present();

@@ -43,8 +43,8 @@ export class ChildComponent {
     animateLike = true;
     animateNotLike = true;
     animateUp = true;
-    @Input() persona;
-    @Output() persona_seleccionada:EventEmitter<Object>= new EventEmitter();  
+    @Input() usuario;
+    @Output() usuario_seleccionada:EventEmitter<Object>= new EventEmitter();  
     x = 0;
     y = 0;
     left = '';
@@ -124,7 +124,7 @@ export class ChildComponent {
       }
     showNextImage() {
         
-        if (this.counter < this.persona.images.length -1) {
+        if (this.counter < this.usuario.imagenes.length -1) {
            this.counter += 1;
          }
        }
@@ -139,7 +139,7 @@ export class ChildComponent {
     }
     finishAnimationLike() {
         if(this.animateLike == false){
-            this.persona_seleccionada.emit(this.persona); 
+            this.usuario_seleccionada.emit(this.usuario); 
             this.alertService.presentToast('Like');
         }
     }
@@ -149,7 +149,7 @@ export class ChildComponent {
     }
     finishAnimationNotLike() {
         if(this.animateNotLike == false){
-            this.persona_seleccionada.emit(this.persona); 
+            this.usuario_seleccionada.emit(this.usuario); 
             this.alertService.presentToast('Not Like');
         }
     }

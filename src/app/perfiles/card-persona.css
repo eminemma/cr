@@ -41,3 +41,12 @@ ul {
 .card{
   position: absolute;
 }
+
+ion-card-header{
+  position: absolute;
+  top: 69%;
+}
+
+ion-card-subtitle{
+  color: white;
+}

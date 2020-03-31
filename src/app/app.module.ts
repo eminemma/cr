@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -35,6 +35,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
+
+import { AuthInterceptor } from 'src/app/services/AuthInterceptor';
 
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
@@ -78,7 +80,8 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Facebook,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig},
-    Geolocation
+    Geolocation,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

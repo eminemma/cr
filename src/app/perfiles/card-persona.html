@@ -8,7 +8,7 @@
     
   >
     <ul>
-      <li *ngFor="let item of persona.images;let i = index">
+      <li *ngFor="let item of usuario.imagenes;let i = index">
      
         <img 
           *ngIf="i == counter"
@@ -16,14 +16,14 @@
           (swipeleft)="startAnimationNotLike()"
           (swipeup)="showNextImage()"
           (swipedown)="showPreviousImage()"
-          [src]="persona.images[i].src"
+          [src]="usuario.imagenes[i].src"
           style="width: 100%;"
         />
       </li>
       <div class="carousel-indicador">
         <div
           class="indicador"
-          *ngFor="let item of persona.images;let i = index"
+          *ngFor="let item of usuario.imagenes;let i = index"
           [ngClass]="{'active': i == counter}"
         ></div>
       </div>
@@ -42,9 +42,9 @@
     </div>
     <ion-card-header>
       <ion-card-subtitle>Silueta 1</ion-card-subtitle>
-      <ion-card-title>{{persona.name}}</ion-card-title>
+      <ion-card-title>{{usuario.nombre}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      {{persona.descripcion}}
+      {{usuario.descripcion}}
     </ion-card-content>
   </ion-card>

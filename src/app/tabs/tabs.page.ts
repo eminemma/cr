@@ -10,13 +10,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class TabsPage {
 
-  constructor( 
+  constructor(
     private router: Router,
     private fireAuth: AngularFireAuth,
     private usuarioService: UsuarioService
   ) {
-    this.usuarioService.getUserDetails(this.fireAuth.auth.currentUser.uid).subscribe(done => {
-      if (done == null || typeof done !== 'object') {
+    
+    this.usuarioService.getUsuario(this.fireAuth.auth.currentUser.uid).subscribe(done => {
+      if (done.error == true) {
         this.router.navigate(['./crear1']);
       }
     });
