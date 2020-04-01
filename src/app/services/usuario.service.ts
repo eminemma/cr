@@ -21,15 +21,19 @@ export class UsuarioService {
     return this.http.post(this.env.API_URL + 'usuario', usuario);
   }
 
-  async modificarUsuario(usuario: Usuario) {
-    return firebase.database().ref('users/' + usuario.id).set(usuario);
+  modificarUsuario(usuario: Usuario): Observable<any> {
+    return this.http.patch(this.env.API_URL + 'usuario', usuario);
   }
 
   getUsuario(id): Observable<any>  {
     return this.http.get(this.env.API_URL + 'usuario/' + id);
   }
 
-  getUsuarios() : Observable<any> {
-    return this.af.list('/users').valueChanges();
+  getUsuarios(id): Observable<any> {
+    return this.http.get(this.env.API_URL + 'usuarios/' + id);
+  }
+
+  actualizarPosicon(id, x, y): Observable<any> {
+    return this.http.get(this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y);
   }
 }

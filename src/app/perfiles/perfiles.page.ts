@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/models/Usuario';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvService } from 'src/app/services/env.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -14,39 +15,44 @@ import { EnvService } from 'src/app/services/env.service';
   styleUrls: ['perfiles.page.scss']
 })
 export class PerfilesPage {
-  usuarios: Array<Usuario>;
-  
+  usuarios: Array<Usuario>;  
+  usuario: Usuario;
+  showSplash = true;
 
   constructor(
     private usuarioService: UsuarioService,
     private fireAuth: AngularFireAuth,
     private loadingService: LoadingService,
     private env: EnvService,
-    private http: HttpClient
+    private http: HttpClient,
+    private geolocation: Geolocation,
   //  private geolocation: Geolocation
   ) {
     this.usuarios = new Array<Usuario>();
   }
-  usuario: Usuario;
   async ngOnInit() {
-   
-    this.loadingService.Loading();
-    this.usuarioService.getUsuarios().subscribe((usuarios: Usuario[]) => {
-      this.usuarios = usuarios;
-      
-      this.loadingService.close();
-      interval(1000).subscribe(() => {
-        if (this.usuarios.length === 0) {
-          console.log('Pasaa');
-          this.loadingService.Loading();
-          this.usuarioService.getUsuarios().subscribe((usuarios: Usuario[]) => {
-            this.usuarios = usuarios;
-            this.loadingService.close();
-          });
-        }
-      });
+    
+    interval(1000).subscribe(() => {
+      if (this.usuarios.length === 0) {
+        this.showSplash = true;
+        this.usuarioService.getUsuarios(this.fireAuth.auth.currentUser.uid).subscribe((usuarios: Usuario[]) => {
+          this.usuarios = usuarios;
+          if(this.usuarios.length > 0) this.showSplash = false;
+        });
+      }
     });
 
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+    // data can be a set of coordinates, or an error (if an error occurred).
+    // data.coords.latitude
+    // data.coords.longitude
+    console.log(data.coords.latitude);
+    console.log(data.coords.longitude);
+      this.usuarioService.actualizarPosicon(this.fireAuth.auth.currentUser.uid,data.coords.longitude,data.coords.latitude).subscribe(data => {
+        console.log(data);
+      });
+    });
    
   }
   GetChildData(usuario) {

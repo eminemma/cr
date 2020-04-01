@@ -26,8 +26,8 @@ export class Crear1Page implements OnInit {
     private loadingService: LoadingService
   ) {
     this.usuario = new Usuario();
-    this.usuario.hombre = false;
-    this.usuario.mujer = false;
+    this.usuario.hombre = 1;
+    this.usuario.mujer = 1;
     this.usuario.distanciaBusqueda = 100;
     this.usuario.edadBusqueda = 70;
     this.imagenes = [
