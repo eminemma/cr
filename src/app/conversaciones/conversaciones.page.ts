@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
-import {
+/*import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
@@ -9,19 +9,18 @@ import {
   GoogleMapsAnimation,
   MyLocation
 } from '@ionic-native/google-maps';
+map: GoogleMap;
+*/
 @Component({
   selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  templateUrl: 'conversaciones.page.html',
+  styleUrls: ['conversaciones.page.scss']
 })
-export class Tab2Page {
-  map: GoogleMap;
+export class ConversacionesPage {
   constructor(private loadingController: LoadingController) {}
 
-  async ngOnInit(){
-   
+  ngInit() {
   }
-  async onButtonClick() {
-    
+  onButtonClick() {
   }
 }

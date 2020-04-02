@@ -29,8 +29,8 @@ export class UsuarioService {
     return this.http.get(this.env.API_URL + 'usuario/' + id);
   }
 
-  getUsuarios(id): Observable<any> {
-    return this.http.get(this.env.API_URL + 'usuarios/' + id);
+  getUsuarios(id): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.env.API_URL + 'usuarios/' + id);
   }
 
   actualizarPosicon(id, x, y): Observable<any> {

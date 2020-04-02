@@ -4,11 +4,13 @@ export class Usuario {
     public mujer: number;
     public hombre: number;
     public correo: string;
-    public imagenes: Array<ImagenCamera>;
+    public imagenes: ImagenCamera[];
     public nombre: string;
 
     // Parametros de busqueda
     public distanciaBusqueda: number;
     public distancia: number;
     public edadBusqueda: number;
+    public edadBusquedaMin: number;
+    public edadBusquedaMax: number;
 }

@@ -16,7 +16,7 @@ import { Usuario } from 'src/app/models/Usuario';
 export class CameraImagePage implements OnInit {
   @Input() usuario: Usuario;
   @Input() indexImagen: number;
-  @Input() imagenes: Array<ImagenCamera>;
+  @Input() imagenes: ImagenCamera[];
   @Input() indexHabilitar;
   @Output() indexHabilitarNuevo: EventEmitter <object> = new EventEmitter();
   imagenCamera: ImagenCamera;

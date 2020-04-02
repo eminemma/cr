@@ -1,53 +1,59 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-
+import { AuthGuard } from 'src/app/guard/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'perfiles',
         children: [
           {
             path: '',
             loadChildren: () =>
               import('../perfiles/perfiles.module').then(m => m.Tab1PageModule)
+              ,
+    canActivate: [AuthGuard]
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'conversaciones',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../conversaciones/conversaciones.module').then(m => m.ConversacionesModule)
+              ,
+    canActivate: [AuthGuard]
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'preferencias',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../preferencias/preferencias.module').then(m => m.PreferenciasModule)
+              ,
+    canActivate: [AuthGuard]
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/principal/tabs/tab1',
+        redirectTo: '/principal/perfiles',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/principal/tabs/tab1',
+    redirectTo: '/principal/perfiles',
     pathMatch: 'full'
   }
 ];

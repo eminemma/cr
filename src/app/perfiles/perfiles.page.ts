@@ -15,7 +15,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['perfiles.page.scss']
 })
 export class PerfilesPage {
-  usuarios: Array<Usuario>;  
+  usuarios: Usuario[];
   usuario: Usuario;
   showSplash = true;
 
@@ -28,7 +28,7 @@ export class PerfilesPage {
     private geolocation: Geolocation,
   //  private geolocation: Geolocation
   ) {
-    this.usuarios = new Array<Usuario>();
+    this.usuarios = [];
   }
   async ngOnInit() {
     

@@ -37,10 +37,12 @@ export class LoginServiceService {
           const credential = firebase.auth.FacebookAuthProvider.credential(
             rta.authResponse.accessToken
           );
+          //this.fireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
           this.fireAuth.auth.signInWithCredential(credential).then(response => {
             // this.router.navigate(["/profile"]);
             // this.loading.dismiss();
-            this.fireAuth.auth.currentUser.getIdToken(true)
+            this.fireAuth.auth.currentUser.getIdToken(false)
             .then((token) => {
               localStorage.setItem('token',token);
             });

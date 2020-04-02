@@ -14,7 +14,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class Crear1Page implements OnInit {
   usuario: Usuario;
-  imagenes: Array<ImagenCamera>;
+  imagenes: ImagenCamera[];
   usuarioNombre: string;
   private usuarioForm: FormGroup;
   constructor(
