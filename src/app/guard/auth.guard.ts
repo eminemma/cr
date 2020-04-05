@@ -21,7 +21,9 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       //this.loginServiceService.logout();
       if(this.loginServiceService.isTokenExpired()){
+      
         this.loginServiceService.isLoggedIn2().then((value) => {
+         
           this.fireAuth.auth.currentUser.getIdToken(false).then((token) => localStorage.setItem('token', token));
        
     

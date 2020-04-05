@@ -13,4 +13,11 @@ export class Usuario {
     public edadBusqueda: number;
     public edadBusquedaMin: number;
     public edadBusquedaMax: number;
+
+    //coordenadas
+    public x: number;
+    public y: number;
+
+    //device para mandar mensaje
+    public idDevice: any;
 }

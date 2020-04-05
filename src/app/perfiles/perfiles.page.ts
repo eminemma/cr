@@ -8,7 +8,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvService } from 'src/app/services/env.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertService } from "src/app/services/alert.service";
+import { FCM } from '@ionic-native/fcm/ngx';
 
+import { FcmService } from 'src/app/services/fcm.service';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'perfiles.page.html',
@@ -26,12 +29,23 @@ export class PerfilesPage {
     private env: EnvService,
     private http: HttpClient,
     private geolocation: Geolocation,
+    private fcm: FCM,
+    private alertService: AlertService
   //  private geolocation: Geolocation
   ) {
     this.usuarios = [];
   }
   async ngOnInit() {
-    
+
+    this.fcm.getToken().then(token => {
+      this.alertService.presentToast(token);
+      const usuario = new Usuario();
+      usuario.id = this.fireAuth.auth.currentUser.uid;
+      usuario.idDevice = token;
+      this.usuarioService.actualizarDevice(usuario).subscribe((message) => {
+        this.alertService.presentToast(JSON.stringify(message));
+      });
+    });
     interval(1000).subscribe(() => {
       if (this.usuarios.length === 0) {
         this.showSplash = true;
@@ -41,6 +55,8 @@ export class PerfilesPage {
         });
       }
     });
+
+    
 
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {

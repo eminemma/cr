@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "985112979674",
+    "firebase_url": "https://crush-13680.firebaseio.com",
+    "project_id": "crush-13680",
+    "storage_bucket": "crush-13680.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985112979674:android:d7fa6368579a7e8dfadde3",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985112979674-t4ep8n4og46m3o4q1bi12canr0jbvt1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAQZyQDIbAufa29Fo0Inkv79nlCYUGf6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985112979674-t4ep8n4og46m3o4q1bi12canr0jbvt1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

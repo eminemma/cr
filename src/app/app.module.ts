@@ -38,6 +38,13 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { AuthInterceptor } from 'src/app/services/AuthInterceptor';
 
+import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
+import { AngularFirestore } from 'angularfire2/firestore';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Firebase } from '@ionic-native/firebase/ngx';
+import { MatchPageModule } from './components/match/match.module';
+
+
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
     swipe: { direction: Hammer.DIRECTION_ALL },
@@ -63,6 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     FormsModule,
+    MatchPageModule,
     ImageCropperModule,
     TranslateModule.forRoot({
       loader: {
@@ -82,8 +90,12 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig},
     Geolocation,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    LocalNotifications,
+    Firebase,
+    AngularFirestore,
+    FCM
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

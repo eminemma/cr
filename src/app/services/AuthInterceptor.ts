@@ -19,12 +19,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if(this.loginService.isTokenExpired()){
       this.loginService.isLoggedIn2().then((value) => {
+        if(this.fireAuth.auth.currentUser !== null){
         this.fireAuth.auth.currentUser.getIdToken(false).then((token) => localStorage.setItem('token', token));
         request = request.clone({
           setHeaders: {
             Authorization: localStorage.getItem('token')
           }
         });
+      }
      
   
       return next.handle(request);

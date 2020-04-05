@@ -40,7 +40,7 @@ export class LoginServiceService {
           //this.fireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
           this.fireAuth.auth.signInWithCredential(credential).then(response => {
-            // this.router.navigate(["/profile"]);
+            // this.router.navigate(['/profile']);
             // this.loading.dismiss();
             this.fireAuth.auth.currentUser.getIdToken(false)
             .then((token) => {
@@ -62,9 +62,9 @@ export class LoginServiceService {
 
   getInfoFacebook() {
     return this.facebook
-      .api("/me?fields=id,name,email,first_name,picture,last_name,gender", [
-        "public_profile",
-        "email"
+      .api('/me?fields=id,name,email,first_name,picture,last_name,gender', [
+        'public_profile',
+        'email'
       ]);
   }
 
@@ -82,7 +82,7 @@ export class LoginServiceService {
   logout() {
     this.fireAuth.auth.signOut().then(() => {
       localStorage.removeItem('token');
-      this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     });
   }
 
@@ -91,7 +91,7 @@ export class LoginServiceService {
 
     if (decoded.exp === undefined) return null;
 
-    const date = new Date(0); 
+    const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
   }

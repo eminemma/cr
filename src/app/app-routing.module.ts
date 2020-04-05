@@ -42,12 +42,17 @@ const routes: Routes = [
   {
     path: 'cropp',
     loadChildren: () => import('./components/cropp/cropp.module').then( m => m.CroppPageModule)
+  },
+  {
+    path: 'match',
+    loadChildren: () => import('./components/match/match.module').then( m => m.MatchPageModule)
   }
 ];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
+  
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

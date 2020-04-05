@@ -1,8 +1,15 @@
+
 import { Component, Input, EventEmitter, Output,ElementRef, Renderer  } from '@angular/core';
 import { trigger, keyframes, animate, transition, state,style } from '@angular/animations';
 import { AlertService } from 'src/app/services/alert.service';
-import { Gesture, GestureConfig, createGesture } from '@ionic/core';
 import { DomController } from '@ionic/angular';
+import { Evento } from 'src/app/models/Evento';
+import { Usuario } from 'src/app/models/Usuario';
+import { EventoService } from 'src/app/services/evento.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { ModalController } from '@ionic/angular';
+import { MatchPage } from 'src/app/components/match/match.page';
+
 @Component({
   selector: 'card-persona-component',
   templateUrl: 'card-persona.html',
@@ -43,14 +50,15 @@ export class ChildComponent {
     animateLike = true;
     animateNotLike = true;
     animateUp = true;
-    @Input() usuario;
+    @Input() usuario: Usuario;
     @Output() usuario_seleccionada:EventEmitter<Object>= new EventEmitter();  
     x = 0;
     y = 0;
     left = '';
     top = '';
     title = 'Drag Me!';
-  
+    evento: Evento;
+     currentModal = null;
     startX = 0;
     startY = 0;
     /*slideItems = [
@@ -63,9 +71,12 @@ export class ChildComponent {
 
     constructor(
         private alertService: AlertService,
-        public element: ElementRef, 
+        public element: ElementRef,
         public renderer: Renderer,
-         public domCtrl: DomController
+        public domCtrl: DomController,
+        public eventoService: EventoService,
+        private fireAuth: AngularFireAuth,
+        public modalController: ModalController
     ) {
     }
 
@@ -140,6 +151,22 @@ export class ChildComponent {
     finishAnimationLike() {
         if(this.animateLike == false){
             this.usuario_seleccionada.emit(this.usuario); 
+            this.evento = new Evento();
+            this.evento.evento = 'like';            
+            this.evento.estado = 1;
+            this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
+            this.evento.usuarioRecibeId = this.usuario.id;
+     
+            this.eventoService.like(this.evento).subscribe(
+                (message) => {
+                    if(message.codigo == 'match'){
+                        // Schedule a single notification
+                        // Schedule delayed notification
+                        this.match();
+                        this.alertService.presentToast('Match');
+                    }
+                }
+            );
             this.alertService.presentToast('Like');
         }
     }
@@ -150,21 +177,44 @@ export class ChildComponent {
     finishAnimationNotLike() {
         if(this.animateNotLike == false){
             this.usuario_seleccionada.emit(this.usuario); 
-            this.alertService.presentToast('Not Like');
+            this.evento = new Evento();
+            this.evento.evento = 'dislike';
+            this.evento.estado = 1;
+            this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
+            this.evento.usuarioRecibeId = this.usuario.id;
+     
+            this.eventoService.like(this.evento).subscribe(
+                (message) => {
+                    if(message.codigo == 'match'){
+                        // Schedule a single notification
+                        // Schedule delayed notification
+                        //this.match();
+                    }
+                }
+            );
+            this.alertService.presentToast('disLike');
         }
     }
 
     like() {
         
         this.startAnimationLike();
-        this.alertService.presentToast('Like'); 
       
     }
 
     notLike() {
         
         this.startAnimationNotLike();
-        this.alertService.presentToast('Not Like');
        
     }
+
+    async match() {
+        const modal = await this.modalController.create({
+          component: MatchPage
+        });
+        return await modal.present();
+        this.currentModal = modal;
+      }
+
+  
 }

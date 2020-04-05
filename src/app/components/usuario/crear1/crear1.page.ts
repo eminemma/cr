@@ -7,6 +7,7 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { LoginServiceService } from 'src/app/services/login-service.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-crear1',
   templateUrl: './crear1.page.html',
@@ -23,13 +24,24 @@ export class Crear1Page implements OnInit {
     private fireAuth: AngularFireAuth,
     private facebook: Facebook,
     private loginService: LoginServiceService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private geolocation: Geolocation
   ) {
     this.usuario = new Usuario();
     this.usuario.hombre = 1;
     this.usuario.mujer = 1;
     this.usuario.distanciaBusqueda = 100;
-    this.usuario.edadBusqueda = 70;
+    //this.usuario.edadBusqueda = 70;
+    this.usuario.edadBusquedaMin = 18;
+    this.usuario.edadBusquedaMax = 45;
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+    // data can be a set of coordinates, or an error (if an error occurred).
+    // data.coords.latitude
+    // data.coords.longitude
+    this.usuario.x = data.coords.longitude;
+    this.usuario.y = data.coords.latitude;
+    });
     this.imagenes = [
       new ImagenCamera(),
       new ImagenCamera(),
