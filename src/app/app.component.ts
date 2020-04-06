@@ -13,6 +13,8 @@ import { timer } from 'rxjs';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Router } from '@angular/router';
 import { FcmService } from 'src/app/services/fcm.service';
+import { ModalController } from '@ionic/angular';
+import { MatchPage } from 'src/app/components/match/match.page';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,13 +22,16 @@ import { FcmService } from 'src/app/services/fcm.service';
 })
 export class AppComponent {
   showSplash = true;
+  usuarioMatch;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private translateService: TranslateService,
     private fcm: FCM,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private router: Router,
+    public modalController: ModalController
   ) {
     this.initializeApp();
   }
@@ -42,10 +47,8 @@ export class AppComponent {
       this.notificationSetup();
     });
 
-
- 
   }
-  
+
   private async presentToast(message) {
     const toast = await this.toastController.create({
       message,
@@ -56,10 +59,30 @@ export class AppComponent {
   private notificationSetup() {
     this.fcm.onNotification().subscribe(data => {
       if (data.wasTapped) {
-        console.log(JSON.stringify(data));
+        if (data.landing_page === 'match'){
+          this.usuarioMatch = data.usuarios;
+          this.match();
+          
+        }
+        // this.presentToast('recibe notificacion background');
       } else {
-        console.log(JSON.stringify(data));
-      };
+        // this.presentToast('recibe notificacion foreground o activo');
+        if (data.landing_page === 'match'){
+          this.usuarioMatch = data.usuarios;
+          this.match();
+          
+        }
+      }
     });
+  }
+
+  async match() {
+    const modal = await this.modalController.create({
+      component: MatchPage,
+      componentProps: {
+         usuarios: this.usuarioMatch
+        }
+    });
+    return await modal.present();
   }
 }

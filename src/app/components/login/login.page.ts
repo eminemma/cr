@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     this.loginService.isLoggedIn2().then((value) => {
-      if (value) {        
+      if (value) {
         this.router.navigate(['./principal']);
       }
   });

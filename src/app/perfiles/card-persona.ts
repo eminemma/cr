@@ -1,6 +1,6 @@
 
-import { Component, Input, EventEmitter, Output,ElementRef, Renderer  } from '@angular/core';
-import { trigger, keyframes, animate, transition, state,style } from '@angular/animations';
+import { Component, Input, EventEmitter, Output, ElementRef, Renderer  } from '@angular/core';
+import { trigger, keyframes, animate, transition, state, style } from '@angular/animations';
 import { AlertService } from 'src/app/services/alert.service';
 import { DomController } from '@ionic/angular';
 import { Evento } from 'src/app/models/Evento';
@@ -51,24 +51,16 @@ export class ChildComponent {
     animateNotLike = true;
     animateUp = true;
     @Input() usuario: Usuario;
-    @Output() usuario_seleccionada:EventEmitter<Object>= new EventEmitter();  
+    @Output() usuarioSeleccionada: EventEmitter<object> = new EventEmitter();
     x = 0;
     y = 0;
     left = '';
     top = '';
-    title = 'Drag Me!';
     evento: Evento;
      currentModal = null;
     startX = 0;
     startY = 0;
-    /*slideItems = [
-      { src: 'https://placeimg.com/600/600/any', title: 'Title 1' },
-      { src: 'https://placeimg.com/600/600/nature', title: 'Title 2' },
-      { src: 'https://placeimg.com/600/600/sepia', title: 'Title 3' },
-      { src: 'https://placeimg.com/600/600/people', title: 'Title 4' },
-      { src: 'https://placeimg.com/600/600/tech', title: 'Title 5' }
-    ];*/
-
+    usuarioMatch: Usuario[];
     constructor(
         private alertService: AlertService,
         public element: ElementRef,
@@ -81,61 +73,48 @@ export class ChildComponent {
     }
 
     ngAfterViewInit() {
-
-
         let hammer = new window['Hammer'](this.element.nativeElement);
 
         hammer.on('pan', (ev) => {
-            console.log('pan');
             this.handlePan(ev);
         });
 
         hammer.on('panend', (ev) => {
-            console.log('panend');
             this.handlePanEnd(ev);
         });
-        
-        
 
     }
-    handlePan(ev){
-        console.log('drag');
-        let deltaX = ev.deltaX;
-        let deltaY = ev.deltaY;
-        
+    handlePan(ev) {
+        const deltaX = ev.deltaX;
+        const deltaY = ev.deltaY;
+
         this.domCtrl.write(() => {
-            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration','0s');
-            this.renderer.setElementStyle(this.element.nativeElement, 'transform',`translate(${deltaX}px,${deltaY}px)`);
+            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration', '0s');
+            this.renderer.setElementStyle(this.element.nativeElement, 'transform', `translate(${deltaX}px,${deltaY}px)`);
         });
 
     }
 
-    handlePanEnd(ev){
-        console.log('termina');
-        let deltaX = 0;
-        let deltaY = 0;
+    handlePanEnd(ev) {
+        const deltaX = 0;
+        const deltaY = 0;
 
         this.domCtrl.write(() => {
-            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration','0.55s');
-            this.renderer.setElementStyle(this.element.nativeElement, 'transform',`translate(${deltaX}px,${deltaY}px)`);
+            this.renderer.setElementStyle(this.element.nativeElement, 'transition-duration', '0.55s');
+            this.renderer.setElementStyle(this.element.nativeElement, 'transform', `translate(${deltaX}px,${deltaY}px)`);
         });
 
     }
-  
     onPan(event: any): void {
         event.preventDefault();
         this.x = this.startX + event.deltaX;
         this.y = this.startY + event.deltaY;
 
-        this.left = this.x + "px";
-        this.top = this.y + "px";
-        console.log('Pan');
-        console.log(this.x );
-        console.log(this.y );
+        this.left = this.x + 'px';
+        this.top = this.y + 'px';
       }
     showNextImage() {
-        
-        if (this.counter < this.usuario.imagenes.length -1) {
+        if (this.counter < (this.usuario.imagenes.length - 1)) {
            this.counter += 1;
          }
        }
@@ -149,19 +128,19 @@ export class ChildComponent {
         this.animateLike = false;
     }
     finishAnimationLike() {
-        if(this.animateLike == false){
-            this.usuario_seleccionada.emit(this.usuario); 
+        if (this.animateLike === false) {
+            this.usuarioSeleccionada.emit(this.usuario);
             this.evento = new Evento();
-            this.evento.evento = 'like';            
+            this.evento.evento = 'like';
             this.evento.estado = 1;
             this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
             this.evento.usuarioRecibeId = this.usuario.id;
-     
             this.eventoService.like(this.evento).subscribe(
                 (message) => {
-                    if(message.codigo == 'match'){
+                    if (message.codigo === 'match') {
                         // Schedule a single notification
                         // Schedule delayed notification
+                        this.usuarioMatch = message.usuarios;
                         this.match();
                         this.alertService.presentToast('Match');
                     }
@@ -175,21 +154,16 @@ export class ChildComponent {
         this.animateNotLike = false;
     }
     finishAnimationNotLike() {
-        if(this.animateNotLike == false){
-            this.usuario_seleccionada.emit(this.usuario); 
+        if (this.animateNotLike === false) {
+            this.usuarioSeleccionada.emit(this.usuario);
             this.evento = new Evento();
             this.evento.evento = 'dislike';
             this.evento.estado = 1;
             this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
             this.evento.usuarioRecibeId = this.usuario.id;
-     
+
             this.eventoService.like(this.evento).subscribe(
                 (message) => {
-                    if(message.codigo == 'match'){
-                        // Schedule a single notification
-                        // Schedule delayed notification
-                        //this.match();
-                    }
                 }
             );
             this.alertService.presentToast('disLike');
@@ -197,24 +171,21 @@ export class ChildComponent {
     }
 
     like() {
-        
         this.startAnimationLike();
-      
     }
 
     notLike() {
-        
         this.startAnimationNotLike();
-       
     }
 
     async match() {
         const modal = await this.modalController.create({
-          component: MatchPage
+          component: MatchPage,
+          componentProps: {
+             usuarios: this.usuarioMatch
+            }
         });
         return await modal.present();
         this.currentModal = modal;
       }
-
-  
 }
