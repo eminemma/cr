@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <!-- <ion-list>
+    <ion-reorder-group (ionItemReorder)="onRenderItems($event)" disabled="false">
+ 
+      <ion-item *ngFor="let item of listItems">
+        <ion-label>
+          <ion-img style="width: 10%;" [src]="item.images[0].src"></ion-img>
+        </ion-label>
+        
+        <ion-reorder></ion-reorder>
+      </ion-item>
+ 
+    </ion-reorder-group>
+  </ion-list>
+  <ion-list text-center>
+    <ion-button (click)="getList()">
+      Get Updated List
+    </ion-button>
+  </ion-list>-->
+  <ion-button (click)="getList()">
+    Get Updated List
+  </ion-button>
+  <!--<div class="container" [dragula]='"bag-one"' [dragulaModel]='many'>
+    <div  *ngFor="let item of listItems" style="width: 10%;float: left;margin-left: 10px;"><ion-img  [src]="item.images[0].src"></ion-img></div>
+    <div *ngFor='let text of many' [innerHtml]='text'></div>
+  </div>-->
+
+  <!--<ul [dragula]='"bag-items"' [dragulaModel]='items'>
+    <li *ngFor="let item of items">{{item}}</li>
+  </ul>-->
+
+  <ul [dragula]='"bag"' [(dragulaModel)]="imagenes">
+    <li *ngFor="let item of imagenes" style="width: 30%;
+    float: left;cursor: move;list-style: none;"> 
+      <ion-card>
+        <ion-img  [src]="item.src"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>Destination</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </li>
+  </ul>
+
+  
+</ion-content>
+

@@ -100,4 +100,8 @@ export class CroppPage implements OnInit {
   save() {
     this.router.navigate(['./crear3'], { state: { usuario: this.usuario } });
   }
+
+  editar() {
+    this.router.navigate(['principal/imagenesPerfil'], { state: { usuario: this.usuario } });
+  }
 }

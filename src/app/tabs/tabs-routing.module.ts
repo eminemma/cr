@@ -45,6 +45,18 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'imagenesPerfil',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../components/usuario/edicion/edicion.module').then(m => m.EdicionModule)
+              ,
+    canActivate: [AuthGuard]
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/principal/perfiles',
         pathMatch: 'full'

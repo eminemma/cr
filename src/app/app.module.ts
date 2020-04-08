@@ -44,7 +44,9 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { MatchPageModule } from './components/match/match.module';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { DragulaModule } from 'ng2-dragula';
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
     swipe: { direction: Hammer.DIRECTION_ALL },
@@ -60,6 +62,8 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    
+    DragDropModule,
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(),
@@ -78,7 +82,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })],
+    }),
+    DragulaModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,

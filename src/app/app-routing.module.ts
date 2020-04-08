@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -40,12 +41,20 @@ const routes: Routes = [
     loadChildren: () => import('./components/usuario/crear3/crear3.module').then( m => m.Crear3PageModule)
   },
   {
+    path: 'edicion',
+    loadChildren: () => import('./components/usuario/edicion/edicion.module').then( m => m.EdicionModule)
+  },
+  {
     path: 'cropp',
     loadChildren: () => import('./components/cropp/cropp.module').then( m => m.CroppPageModule)
   },
   {
     path: 'match',
     loadChildren: () => import('./components/match/match.module').then( m => m.MatchPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./components/usuario/profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
 @NgModule({
