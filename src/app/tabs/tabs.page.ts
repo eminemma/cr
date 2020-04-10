@@ -24,14 +24,4 @@ export class TabsPage {
     });
   }
 
-  abrirEdicion() {
-    this.usuarioService.getUsuario(this.fireAuth.auth.currentUser.uid).subscribe(user => {
-      this.usuario = user;
-     
-      this.router.navigate(['principal/imagenesPerfil'], { state: { usuario: this.usuario } });
-
-    });
-    
-  }
-
 }

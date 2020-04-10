@@ -3,22 +3,25 @@
   <div [dragula]='"bag"' [(dragulaModel)]="usuario.imagenes">
   <div [ngClass]="{'test': imagen.src === undefined}"
     *ngFor="let imagen of usuario.imagenes; let i = index"
-    style="width: 20%;float: left;
-    margin-top: 10px;
-    margin-left: 10px;height: 180px;"
+    style="width: 25%;float: left;
+    padding-top: 10px;
+    padding-left: 10px;" [attr.position]="i" [attr.id]="imagen.id"
   >
     <camera-image-component
       class="small-photo"
       [indexImagen]="i"
       [indexHabilitar]="indexHabilitar"
       [imagenes]="this.usuario.imagenes"
-      [usuario]="usuario"
-      (indexHabilitarNuevo)="setHabilitarIndex($event)">
+      (indexHabilitarNuevo)="setHabilitarIndex($event)"
+      (eliminarEvento)="cargarDatos($event)"
+      
+      >
     </camera-image-component>
    
   </div>
 </div>
   <section>
-    <ion-button expand="block" (click)="finalizarCreacionUsuario()">Continuar</ion-button>
+   
   </section>
+  <!--<cropp-edicion></cropp-edicion>-->
 </ion-content>

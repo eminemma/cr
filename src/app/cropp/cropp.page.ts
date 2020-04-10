@@ -7,10 +7,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RouterExtService } from 'src/app/services/routerext.service';
 
 import { ImageCroppedEvent } from 'ngx-image-cropper';
-import { DataService } from 'src/app/services/data.service';
-import { ImagenCamera } from 'src/app/models/ImagenCamera';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'cropp-edicion',
@@ -23,7 +19,7 @@ export class CroppPage implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   myImage: any = '';
-  imagen: ImagenCamera;
+  usuario: Usuario;
   esGalleria: boolean;
   edicion: boolean = false;
   message: any;
@@ -60,16 +56,14 @@ export class CroppPage implements OnInit {
     private file: File,
     private router: Router,
     private route: ActivatedRoute,
-    private routerExtService: RouterExtService,
-    private data: DataService,
-    private fireAuth: AngularFireAuth,
+    private routerExtService: RouterExtService
   ) {
 
     
-    this.imagen = new ImagenCamera();
-    this.imagen.idUsuario  = this.fireAuth.auth.currentUser.uid;
+    
+    this.usuario = (this.router.getCurrentNavigation().extras.state.usuario) as Usuario;
     this.esGalleria = this.router.getCurrentNavigation().extras.state.esGalleria;
-    this.edicion = this.router.getCurrentNavigation().extras.state.edicion;
+    this.edicion = this.router.getCurrentNavigation().extras.state.edicion; 
 
     this.indexImagen = this.router.getCurrentNavigation().extras.state.indexImage;
     const opciones = (this.esGalleria) ? this.getCameraOptionsGallery() : this.getCameraOptions();
@@ -96,6 +90,7 @@ export class CroppPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('previous' + this.route.pathFromRoot);
   }
 
   fileChangeEvent(event: any): void {
@@ -103,8 +98,7 @@ export class CroppPage implements OnInit {
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
-    this.imagen.src = event.base64;
-    this.imagen.posicion = this.indexImagen;
+    this.usuario.imagenes[this.indexImagen].src = event.base64;
   }
   imageLoaded() {
     // show cropper
@@ -114,12 +108,10 @@ export class CroppPage implements OnInit {
   }
 
   save() {
-    this.data.setImagen(this.imagen);
     if (this.edicion) {
-      this.router.navigate(['principal/imagenesPerfil']);
+      this.router.navigate(['principal/imagenesPerfil'], { state: { usuario: this.usuario } });
     } else {
-      //VER COMO SOLUCIONAR AL CREAR USUARIO
-      //this.router.navigate(['./crear3'], { state: { usuario: this.usuario } });
+      this.router.navigate(['./crear3'], { state: { usuario: this.usuario } });
     }
   }
 }

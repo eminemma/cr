@@ -41,4 +41,16 @@ export class UsuarioService {
   actualizarDevice(usuario: Usuario): Observable<any> {
     return this.http.post(this.env.API_URL + 'device', usuario);
   }
+
+  guardarImagen(imagen: ImagenCamera): Observable<any> {
+    return this.http.post(this.env.API_URL + 'imagen', imagen);
+  }
+
+  modificarPosicionImagenes(imagenes: ImagenCamera[]): Observable<any> {
+    return this.http.patch(this.env.API_URL + 'imagen', imagenes);
+  }
+
+  eliminarImagen(id): Observable<any> {
+    return this.http.delete(this.env.API_URL + 'imagen/' + id);
+  }
 }

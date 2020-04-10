@@ -1,9 +1,15 @@
-<img src="{{imagenes[indexImagen].src}}" alt="">   
-<ion-button color="primary" expand="full" (click)="accionesImagen();" *ngIf="imagenes[indexImagen].src === undefined && indexHabilitar == indexImagen "><ion-icon name="add-circle"></ion-icon></ion-button>   
+<img src="{{imagenes[indexImagen].src}}" alt="" />
 <ion-button
-color="danger"
-expand="full"
-(click)="eliminarImagen();"
-*ngIf="imagenes[indexImagen].src !== undefined "
-><ion-icon name="trash"></ion-icon
+  color="primary"
+  expand="full"
+  (click)="accionesImagen();"
+  *ngIf="imagenes[indexImagen].src === undefined && indexHabilitar == indexImagen "
+  ><ion-icon name="add-circle"></ion-icon
+></ion-button>
+<ion-button
+  color="danger"
+  expand="full"
+  (click)="eliminarImagen();"
+  *ngIf="imagenes[indexImagen].src !== undefined "
+  ><ion-icon name="trash"></ion-icon
 ></ion-button>

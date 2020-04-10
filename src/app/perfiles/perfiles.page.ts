@@ -46,7 +46,9 @@ export class PerfilesPage {
         this.alertService.presentToast(JSON.stringify(message));
       });
     });
-    interval(1000).subscribe(() => {
+   /*
+   BUSCAR PERFILES
+   interval(1000).subscribe(() => {
       if (this.usuarios.length === 0) {
         this.showSplash = true;
         this.usuarioService.getUsuarios(this.fireAuth.auth.currentUser.uid).subscribe((usuarios: Usuario[]) => {
@@ -54,11 +56,13 @@ export class PerfilesPage {
           if(this.usuarios.length > 0) this.showSplash = false;
         });
       }
-    });
+    });*/
 
     
 
-    let watch = this.geolocation.watchPosition();
+   /*
+   GUARDAR POSICION 
+   let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
     // data can be a set of coordinates, or an error (if an error occurred).
     // data.coords.latitude
@@ -68,7 +72,7 @@ export class PerfilesPage {
       this.usuarioService.actualizarPosicon(this.fireAuth.auth.currentUser.uid,data.coords.longitude,data.coords.latitude).subscribe(data => {
         console.log(data);
       });
-    });
+    });*/
    
   }
   GetChildData(usuario) {

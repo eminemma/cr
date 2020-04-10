@@ -7,6 +7,8 @@ import { ImagenCamera } from '../../../models/ImagenCamera';
 
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/Usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'camera-image-component',
@@ -14,16 +16,18 @@ import { Usuario } from 'src/app/models/Usuario';
   styleUrls: ['./camera-image.css'],
 })
 export class CameraImagePage implements OnInit {
-  @Input() usuario: Usuario;
   @Input() indexImagen: number;
   @Input() imagenes: ImagenCamera[];
   @Input() indexHabilitar;
   @Output() indexHabilitarNuevo: EventEmitter <object> = new EventEmitter();
+  @Output() eliminarEvento: EventEmitter <object> = new EventEmitter();
   imagenCamera: ImagenCamera;
 
   constructor(
     public actionSheetController: ActionSheetController,
-    private route: Router
+    private route: Router,
+    private usuarioService: UsuarioService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -37,12 +41,12 @@ export class CameraImagePage implements OnInit {
         text: 'Tomar una foto',
         role: 'destructive',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: { usuario: this.usuario, indexImage: this.indexImagen}});
+          this.route.navigate(['/cropp'], { state: { indexImage: this.indexImagen, edicion: true}});
         }
       }, {
         text: 'Elegir desde Mis Fotos',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: { usuario: this.usuario, indexImage: this.indexImagen, esGalleria: 'true'}});
+          this.route.navigate(['/cropp'], { state: { indexImage: this.indexImagen, esGalleria: true, edicion: true}});
         }
       }, {
         text: 'Elegir desde Facebook',
@@ -67,13 +71,12 @@ export class CameraImagePage implements OnInit {
   }}
 
   eliminarImagen() {
-    this.imagenes.splice(this.indexImagen, 1);
-    for (let i = 0; i < 12; i++) {
-      if (this.imagenes[i] === undefined) {
-        this.imagenes[i] = new ImagenCamera();
-      }
-    }
-
+    this.loadingService.Loading();
+    this.usuarioService.eliminarImagen(this.imagenes[this.indexImagen].id).subscribe(done => {
+   
+      this.eliminarEvento.emit(this.imagenes[this.indexImagen].id as any);
+      this.loadingService.close();
+    });
     this.habilitarBoton();
   }
 

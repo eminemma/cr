@@ -19,7 +19,8 @@ export class LoadingService {
     }
   }
 
-  close() {
-    this.loadingController.dismiss();
+ async close() {
+    const modal = await this.loadingController.getTop();
+    modal.dismiss();
   }
 }
