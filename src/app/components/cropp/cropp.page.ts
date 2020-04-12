@@ -119,7 +119,7 @@ export class CroppPage implements OnInit {
       this.router.navigate(['principal/imagenesPerfil']);
     } else {
       //VER COMO SOLUCIONAR AL CREAR USUARIO
-      //this.router.navigate(['./crear3'], { state: { usuario: this.usuario } });
+      this.router.navigate(['./crear3']);
     }
   }
 }

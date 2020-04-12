@@ -14,12 +14,9 @@ import { Usuario } from 'src/app/models/Usuario';
   styleUrls: ['./camera-image.css'],
 })
 export class CameraImagePage implements OnInit {
-  @Input() usuario: Usuario;
   @Input() indexImagen: number;
-  @Input() imagenes: ImagenCamera[];
-  @Input() indexHabilitar;
-  @Output() indexHabilitarNuevo: EventEmitter <object> = new EventEmitter();
-  imagenCamera: ImagenCamera;
+  @Input() imagen: ImagenCamera;
+  @Output() eliminarEvento: EventEmitter <object> = new EventEmitter();
 
   constructor(
     public actionSheetController: ActionSheetController,
@@ -27,22 +24,20 @@ export class CameraImagePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.imagenCamera = new ImagenCamera();
   }
   async accionesImagen() {
-    if (this.indexHabilitar === this.indexImagen) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Fotos',
       buttons: [{
         text: 'Tomar una foto',
         role: 'destructive',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: { usuario: this.usuario, indexImage: this.indexImagen}});
+          this.route.navigate(['/cropp'], { state: {  indexImage: this.indexImagen}});
         }
       }, {
         text: 'Elegir desde Mis Fotos',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: { usuario: this.usuario, indexImage: this.indexImagen, esGalleria: 'true'}});
+          this.route.navigate(['/cropp'], { state: { indexImage: this.indexImagen, esGalleria: 'true'}});
         }
       }, {
         text: 'Elegir desde Facebook',
@@ -64,26 +59,10 @@ export class CameraImagePage implements OnInit {
       }]
     });
     await actionSheet.present();
-  }}
+ }
 
   eliminarImagen() {
-    this.imagenes.splice(this.indexImagen, 1);
-    for (let i = 0; i < 12; i++) {
-      if (this.imagenes[i] === undefined) {
-        this.imagenes[i] = new ImagenCamera();
-      }
-    }
-
-    this.habilitarBoton();
+    this.eliminarEvento.emit(this.indexImagen as any);
   }
 
-  habilitarBoton() {
-    for (let i = 0; i < this.imagenes.length; i++) {
-      if (this.imagenes[i].src === undefined) {
-        this.indexHabilitar = i;
-        this.indexHabilitarNuevo.emit(this.indexHabilitar);
-        break;
-      }
-    }
-  }
 }

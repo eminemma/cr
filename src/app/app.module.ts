@@ -46,6 +46,9 @@ import { MatchPageModule } from './components/match/match.module';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { CameraImagePage } from 'src/app/components/usuario/crear3/camera-image';
+
+
 import { DragulaModule } from 'ng2-dragula';
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {

@@ -10,12 +10,8 @@
     <camera-image-component
       class="small-photo"
       [indexImagen]="i"
-      [indexHabilitar]="indexHabilitar"
-      [imagenes]="this.usuario.imagenes"
-      (indexHabilitarNuevo)="setHabilitarIndex($event)"
-      (eliminarEvento)="cargarDatos($event)"
-      
-      >
+      [imagen]="imagen"
+      (eliminarEvento)="eliminarImagen($event)">
     </camera-image-component>
    
   </div>

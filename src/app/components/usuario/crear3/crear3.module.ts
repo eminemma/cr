@@ -17,7 +17,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     Crear3PageRoutingModule,
     ImageCropperModule
   ],
-  declarations: [Crear3Page,CameraImagePage]
+  declarations: [Crear3Page, CameraImagePage]
 })
 export class Crear3PageModule {
  

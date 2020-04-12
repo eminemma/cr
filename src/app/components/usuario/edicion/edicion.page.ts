@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
-import { CameraImagePage } from './camera-image';
+import { CameraImagePage } from 'src/app/components/usuario/crear3/camera-image';
 import { Usuario } from 'src/app/models/Usuario';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
@@ -11,8 +11,6 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
 import { DragulaService } from 'ng2-dragula';
 import { DataService } from 'src/app/services/data.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoadingController } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-edicion',
   templateUrl: './edicion.page.html',
@@ -22,16 +20,10 @@ export class EdicionPage implements OnInit {
   usuario: Usuario;
   indexHabilitar: number;
 
-  message: string;
-
   @ViewChild(CameraImagePage, {static : false}) child: CameraImagePage;
   constructor(
-    private router: Router,
     private usuarioService: UsuarioService,
-    private route: ActivatedRoute,
     private fireAuth: AngularFireAuth,
-    private env: EnvService,
-    private http: HttpClient,
     private dragulaService: DragulaService,
     private data: DataService,
     private loadingService: LoadingService
@@ -103,7 +95,13 @@ export class EdicionPage implements OnInit {
     });
   }
 
-
+  eliminarImagen(index: number) {
+    this.loadingService.Loading();
+    this.usuarioService.eliminarImagen(this.usuario.imagenes[index].id).subscribe(done => {
+        this.loadingService.close();
+        this.cargarDatos();
+    });    
+  }
 
   setHabilitarIndex(indexHabilitar) {
     this.indexHabilitar = indexHabilitar;

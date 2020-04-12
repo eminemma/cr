@@ -38,30 +38,27 @@ export class PerfilesPage {
   async ngOnInit() {
 
     this.fcm.getToken().then(token => {
-      this.alertService.presentToast(token);
+      this.alertService.presentToast('token fcm ' + token);
       const usuario = new Usuario();
       usuario.id = this.fireAuth.auth.currentUser.uid;
       usuario.idDevice = token;
       this.usuarioService.actualizarDevice(usuario).subscribe((message) => {
-        this.alertService.presentToast(JSON.stringify(message));
+        //this.alertService.presentToast(JSON.stringify(message));
       });
     });
-   /*
-   BUSCAR PERFILES
+
+   // BUSCAR PERFILES
    interval(1000).subscribe(() => {
       if (this.usuarios.length === 0) {
         this.showSplash = true;
         this.usuarioService.getUsuarios(this.fireAuth.auth.currentUser.uid).subscribe((usuarios: Usuario[]) => {
           this.usuarios = usuarios;
-          if(this.usuarios.length > 0) this.showSplash = false;
+          if(this.usuarios.length > 0) this .showSplash = false;
         });
       }
-    });*/
+    });
 
-    
-
-   /*
-   GUARDAR POSICION 
+   // GUARDAR POSICION
    let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
     // data can be a set of coordinates, or an error (if an error occurred).
@@ -72,7 +69,7 @@ export class PerfilesPage {
       this.usuarioService.actualizarPosicon(this.fireAuth.auth.currentUser.uid,data.coords.longitude,data.coords.latitude).subscribe(data => {
         console.log(data);
       });
-    });*/
+    });
    
   }
   GetChildData(usuario) {

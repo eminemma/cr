@@ -57,6 +57,18 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'chat',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../components/chat/chat.module').then(m => m.ChatPageModule)
+              ,
+    canActivate: [AuthGuard]
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/principal/perfiles',
         pathMatch: 'full'

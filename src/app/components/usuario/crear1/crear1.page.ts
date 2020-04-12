@@ -42,18 +42,8 @@ export class Crear1Page implements OnInit {
     this.usuario.x = data.coords.longitude;
     this.usuario.y = data.coords.latitude;
     });
+    
     this.imagenes = [
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
-      new ImagenCamera(),
       new ImagenCamera()
     ];
     this.usuario.imagenes = this.imagenes;

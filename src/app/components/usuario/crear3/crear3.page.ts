@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild  } from '@angular/core';
 import { CameraImagePage } from './camera-image';
 import { Usuario } from 'src/app/models/Usuario';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EnvService } from 'src/app/services/env.service';
-
+import { DataService } from 'src/app/services/data.service';
+import { ImagenCamera } from 'src/app/models/ImagenCamera';
 @Component({
   selector: 'app-crear3',
   templateUrl: './crear3.page.html',
@@ -14,28 +13,24 @@ import { EnvService } from 'src/app/services/env.service';
 })
 export class Crear3Page implements OnInit {
   usuario: Usuario;
-  indexHabilitar: number;
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
-    private route: ActivatedRoute,
     private fireAuth: AngularFireAuth,
-    private env: EnvService,
-    private http: HttpClient
+    private data: DataService
   ) {
     this.usuario =   this.router.getCurrentNavigation().extras.state.usuario as Usuario;
-    this.indexHabilitar = 0;
   }
 
   @ViewChild(CameraImagePage, {static : false}) child: CameraImagePage;
 
   ngOnInit() {
-    this.route.params.subscribe(val => {
-      this.habilitarBoton();
+    this.data.currentMessage.subscribe(message => {
+      if (message != null) {
+          this.usuario.imagenes[this.usuario.imagenes.length - 1] = message as ImagenCamera;
+          this.usuario.imagenes.push(new ImagenCamera());
+      }
     });
-  }
-  setHabilitarIndex(indexHabilitar) {
-    this.indexHabilitar = indexHabilitar;
   }
 
 
@@ -53,13 +48,9 @@ export class Crear3Page implements OnInit {
       );
   }
 
-  habilitarBoton() {
-    for (let i = 0; i < this.usuario.imagenes.length; i++) {
-      if (this.usuario.imagenes[i].src === undefined) {
-        this.indexHabilitar = i;
-        break;
-      }
-    }
+
+  eliminarImagen(index: number) {
+    this.usuario.imagenes.splice(index, 1);
   }
 }
 

@@ -9,6 +9,8 @@ import { EventoService } from 'src/app/services/evento.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ModalController } from '@ionic/angular';
 import { MatchPage } from 'src/app/components/match/match.page';
+import { ChatService } from '../services/chat.service';
+import { Chat } from '../models/Chat';
 
 @Component({
   selector: 'card-persona-component',
@@ -61,6 +63,8 @@ export class ChildComponent {
     startX = 0;
     startY = 0;
     usuarioMatch: Usuario[];
+    usuario_primer_id;
+    usuario_segundo_id;
     constructor(
         private alertService: AlertService,
         public element: ElementRef,
@@ -68,7 +72,8 @@ export class ChildComponent {
         public domCtrl: DomController,
         public eventoService: EventoService,
         private fireAuth: AngularFireAuth,
-        public modalController: ModalController
+        public modalController: ModalController,
+        private chatService: ChatService
     ) {
     }
 
@@ -140,8 +145,14 @@ export class ChildComponent {
                     if (message.codigo === 'match') {
                         // Schedule a single notification
                         // Schedule delayed notification
-                        this.usuarioMatch = message.usuarios;
+                        this.usuario_primer_id = message.usuario_primer_id;
+                        this.usuario_segundo_id = message.usuario_segundo_id;
                         this.match();
+                        const chat = new Chat();
+                        chat.idPrimerUsuario = this.usuario_primer_id;
+                        chat.idSegundoUsuario = this.usuario_segundo_id;
+                        chat.creado = new Date().getTime();
+                        this.chatService.crearChat(chat);
                         this.alertService.presentToast('Match');
                     }
                 }
@@ -182,7 +193,8 @@ export class ChildComponent {
         const modal = await this.modalController.create({
           component: MatchPage,
           componentProps: {
-             usuarios: this.usuarioMatch
+            usuario_primer_id: this.usuario_primer_id,
+            usuario_segundo_id: this.usuario_segundo_id
             }
         });
         return await modal.present();

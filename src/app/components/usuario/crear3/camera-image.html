@@ -1,11 +1,11 @@
 <div class="small-photo" (click)="accionesImagen();" >
-    <img src="{{imagenes[indexImagen].src}}" alt="">   
+    <img src="{{imagen.src}}" alt="">   
 </div>
-<ion-button color="primary" expand="full" (click)="accionesImagen();" *ngIf="imagenes[indexImagen].src === undefined && indexHabilitar == indexImagen "><ion-icon name="add-circle"></ion-icon></ion-button>   
+<ion-button color="primary" expand="full" (click)="accionesImagen();" *ngIf="imagen.src === undefined "><ion-icon name="add-circle"></ion-icon></ion-button>   
 <ion-button
 color="danger"
 expand="full"
 (click)="eliminarImagen();"
-*ngIf="imagenes[indexImagen].src !== undefined "
+*ngIf="imagen.src !== undefined "
 ><ion-icon name="trash"></ion-icon
 ></ion-button>
