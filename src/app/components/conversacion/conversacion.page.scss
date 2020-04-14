@@ -1,53 +1,59 @@
 .img_cont_msg {
-    height: 40px;
-    width: 40px;
+  height: 40px;
+  width: 40px;
 }
 
 .msg_cotainer {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 10px;
-    border-radius: 25px;
-    background-color: #f4f5f8;
-    padding: 10px;
-    position: relative;
-    color: black;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  border-radius: 25px;
+  background-color: #f4f5f8;
+  padding: 10px;
+  position: relative;
+  color: black;
 }
 
-.mensaje{
- 
+.mensaje {
 }
 .msg_cotainer_recibe {
-margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 10px;
-    border-radius: 25px;
-    background-color: #3171e0;
-    padding: 10px;
-    position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  border-radius: 25px;
+  background-color: #3171e0;
+  padding: 10px;
+  position: relative;
 }
 .card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.25rem;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
 }
 .msg_card_body {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .card {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: .25rem;
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
-.mb-4, .my-4 {
-    margin-bottom: 1.5rem!important;
+.mb-4,
+.my-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.msg_time {
+  font-size: 10px;
+  text-align: center;
+  padding-bottom: 10px;
 }

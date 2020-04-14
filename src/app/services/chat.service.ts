@@ -20,6 +20,17 @@ export class ChatService {
       .set(chat);
   }
 
+
+
+
+  traerUltimosMensajesChat(idChat: string) {
+    let mensajesRef: AngularFireList<any>;
+    mensajesRef = this.database.list("mensaje", (ref) =>
+      ref.orderByChild("idChat").equalTo(idChat).limitToLast(1)
+    );
+    return mensajesRef.snapshotChanges();
+  }
+
   traerChats(idUsuario: string) {
     let chatRef: AngularFireList<any>;
     chatRef = this.database.list("chat", (ref) =>
@@ -27,7 +38,6 @@ export class ChatService {
     );
     return chatRef.snapshotChanges();
   }
-
   traerChatsOtro(idUsuario: string) {
     let chatRef: AngularFireList<any>;
     chatRef = this.database.list("chat", (ref) =>

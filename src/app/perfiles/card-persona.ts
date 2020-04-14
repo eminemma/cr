@@ -151,7 +151,7 @@ export class ChildComponent {
                         const chat = new Chat();
                         chat.idPrimerUsuario = this.usuario_primer_id;
                         chat.idSegundoUsuario = this.usuario_segundo_id;
-                        chat.creado = new Date().getTime();
+                        chat.creado = new Date().getTime();                        
                         this.chatService.crearChat(chat);
                         this.alertService.presentToast('Match');
                     }

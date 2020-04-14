@@ -53,4 +53,6 @@ export class UsuarioService {
   eliminarImagen(id): Observable<any> {
     return this.http.delete(this.env.API_URL + 'imagen/' + id);
   }
+
+
 }

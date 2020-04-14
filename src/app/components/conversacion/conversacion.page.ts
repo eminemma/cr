@@ -40,6 +40,7 @@ export class ConversacionPage implements OnInit {
   enviarMensaje() {
     this.mensaje.idChat = this.idChat;
     this.mensaje.idUsuarioEnvia = this.fireAuth.auth.currentUser.uid;
+    this.mensaje.creado = new Date().getTime();
     this.chatService.enviarMensaje(this.mensaje);
     this.mensaje.mensaje = "";
   }
@@ -58,7 +59,7 @@ export class ConversacionPage implements OnInit {
       });
     });
     this.mensajes = mensajes;
-    console.log(this.mensajes);*/ 2;
+    console.log(this.mensajes);*/;
   }
 
   buscarMensajes2() {

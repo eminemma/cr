@@ -6,39 +6,71 @@ import { Router } from '@angular/router';
 import { take, map } from "rxjs/operators";
 import { interval, Observable } from "rxjs";
 import {concat} from 'rxjs';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Mensaje } from 'src/app/models/Mensaje';
+import { ChatItemPage } from './chat-item';
 @Component({
   selector: "app-chat",
   templateUrl: "./chat.page.html",
   styleUrls: ["./chat.page.scss"],
 })
 export class ChatPage implements OnInit {
+  chats: Observable<Chat[]>;
   chats2: Observable<Chat[]>;
+  mensaje: Observable<any>;
   constructor(
     private chatService: ChatService,
     private fireAuth: AngularFireAuth,
+    private usuarioSerice: UsuarioService,
     private router: Router,
   ) {
   }
 
   buscarChatPrimerPersona() {
+    
     this.chats2 = this.chatService
     .traerChats(this.fireAuth.auth.currentUser.uid).pipe(
       map((changes) => {
-        return changes.map((c) => ({ id: c.payload.key, ...c.payload.val() }));
+        return changes.map((c) => { 
+          console.log('PrimerPersona');
+          let chat = { id: c.payload.key,  ...c.payload.val() };
+          let uid = (chat.idPrimerUsuario === this.fireAuth.auth.currentUser.uid ? chat.idSegundoUsuario : chat.idPrimerUsuario);
+         console.log(uid);
+          this.usuarioSerice.getPerfilImagenes(uid).subscribe(
+            (imagenes) => {
+              chat.imagen = imagenes[0].src;
+            }
+          );
+          return chat;
+        });
       })
     );
+
   }
 
   buscarChatSegundaPersona() {
-    let chats: Observable<Chat[]>;
-    chats =  this.chatService
+    this.chats =  this.chatService
     .traerChatsOtro(this.fireAuth.auth.currentUser.uid).pipe(
       map((changes) => {
-        return changes.map((c) => ({ id: c.payload.key, ...c.payload.val() }));
+        return changes.map((c) => { 
+          console.log('SegundaPersona');
+          let chat = { id: c.payload.key,  ...c.payload.val() };
+          let uid = (chat.idPrimerUsuario === this.fireAuth.auth.currentUser.uid ? chat.idSegundoUsuario : chat.idPrimerUsuario);
+          this.usuarioSerice.getPerfilImagenes(uid).subscribe(
+            (imagenes) => {
+              chat.imagen = imagenes[0].src;
+            }
+          );
+         
+          return chat;
+        });
       })
     );
-    this.chats2 = concat(this.chats2, chats);
+
+  
   }
+
+  
 
 
   ngOnInit() {
@@ -46,11 +78,13 @@ export class ChatPage implements OnInit {
     this.buscarChatSegundaPersona();
   }
 
-  abrirConversacion(idConversacion: number){
-    this.router.navigateByUrl('/conversacion?id=' + idConversacion);
-  }
 
-  eliminarChat(idChat: string){
-    this.chatService.eliminarChat(idChat);
-  }
+ /*test(chat: Chat){
+  let uid = (chat.idPrimerUsuario === this.fireAuth.auth.currentUser.uid ? chat.idSegundoUsuario : chat.idPrimerUsuario);
+   this.usuarioSerice.getPerfilImagenes(uid).subscribe(
+    (imagenes) => {
+      chat.imagen = imagenes[0].src;
+    }
+  );
+ }*/
 }

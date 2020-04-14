@@ -29,9 +29,9 @@
                   />
                 </ion-avatar>
                 <ion-label>
+                  <div class="msg_time">{{mensaje.creado | date:'medium' }}</div>
                   <div class="msg_cotainer">
-                    {{mensaje.mensaje}}
-                    <span class="msg_time">9:12 AM, Today</span>
+                    {{mensaje.mensaje}}                    
                   </div>
                 </ion-label>
               </ion-item>
