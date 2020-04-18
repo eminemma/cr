@@ -21,6 +21,8 @@ export class LoadingService {
 
  async close() {
     const modal = await this.loadingController.getTop();
-    modal.dismiss();
+    if (modal !== undefined) {
+      modal.dismiss();
+    }
   }
 }

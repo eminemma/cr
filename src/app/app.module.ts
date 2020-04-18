@@ -46,10 +46,15 @@ import { MatchPageModule } from './components/match/match.module';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { CameraImagePage } from 'src/app/components/usuario/crear3/camera-image';
 
+import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
+import { HTTP } from "@ionic-native/http/ngx";
+import { LocationTracker } from '../app/providers/location-tracker';
 
 import { DragulaModule } from 'ng2-dragula';
+
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
     swipe: { direction: Hammer.DIRECTION_ALL },
@@ -101,7 +106,11 @@ export function createTranslateLoader(http: HttpClient) {
     LocalNotifications,
     Firebase,
     AngularFirestore,
-    FCM
+    FCM,
+    BackgroundGeolocation,
+    HTTP,
+    LocationTracker,
+    BackgroundMode
   ],
   bootstrap: [AppComponent],
 })

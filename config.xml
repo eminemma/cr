@@ -108,4 +108,5 @@
     <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyDyFIKeaLRSxRJX-JWPjLp7tW48l83auk0" />
     <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyDyFIKeaLRSxRJX-JWPjLp7tW48l83auk0" />
     <allow-navigation href="https://localhost:8100" sessionid="95b9b2ae" />
+    <plugin name="cordova-plugin-certificates" spec="^0.6.4" />
 </widget>

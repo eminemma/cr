@@ -7,6 +7,7 @@ import { PerfilesPage } from './perfiles.page';
 import { ChildComponent } from './card-persona';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+
 @NgModule({
   imports: [
     IonicModule,

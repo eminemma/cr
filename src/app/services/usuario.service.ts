@@ -4,13 +4,21 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvService } from 'src/app/services/env.service';
+import { HTTP } from '@ionic-native/http/ngx';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
   constructor(
     private env: EnvService,
-    private http: HttpClient
+    private http: HttpClient,
+    private http2: HTTP
   ) { }
   usuario: any;
   // Create
@@ -35,6 +43,7 @@ export class UsuarioService {
   }
 
   actualizarPosicon(id, x, y): Observable<any> {
+    //return this.http2.get(this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y, {}, {'Authorization': localStorage.getItem("token")});
     return this.http.get(this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y);
   }
 

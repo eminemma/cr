@@ -26,6 +26,7 @@ export class CameraImagePage implements OnInit {
   ngOnInit() {
   }
   async accionesImagen() {
+    if(this.imagen.src === undefined){
     const actionSheet = await this.actionSheetController.create({
       header: 'Fotos',
       buttons: [{
@@ -59,6 +60,7 @@ export class CameraImagePage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
  }
 
   eliminarImagen() {
