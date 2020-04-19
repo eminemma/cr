@@ -7,19 +7,26 @@
 </ion-header>-->
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title>
-        Tab 3
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div style="height: 90%;">
   <div *ngFor="let item of usuarios">
-    <card-persona-component
-      style="position: absolute; width: 100%;"
+    <card-persona-component [cambiandoEstadoPerfil]="estadoPerfil"
+      style="display: block;width: 100%;"
       [usuario]="item"
       (usuarioSeleccionada)="GetChildData($event)"
     ></card-persona-component>
+  </div>
+</div>
+  <div class="menu-like">
+    <ion-button color="primary" fill="clear" (click)="notLike()"
+      ><ion-icon
+        size="large"
+        style="color:red;"
+        name="heart-dislike"
+      ></ion-icon
+    ></ion-button>
+    <ion-button color="primary" fill="clear" (click)="like();"
+      ><ion-icon size="large" style="color: #2dd36f;" name="heart"></ion-icon
+    ></ion-button>
   </div>
 </ion-content>
 <div *ngIf="showSplash" class="splash">

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { UsuarioService } from "../services/usuario.service";
 import { LoadingService } from "src/app/services/loading.service";
 import { interval, Observable } from "rxjs";
@@ -20,16 +20,20 @@ import {
 } from "@ionic-native/background-geolocation/ngx";
 import { HTTP } from "@ionic-native/http/ngx";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { ChildComponent } from "./card-persona";
+import { Subject } from "rxjs";
+
 @Component({
   selector: "app-tab1",
   templateUrl: "perfiles.page.html",
   styleUrls: ["perfiles.page.scss"],
 })
 export class PerfilesPage {
+  estadoPerfil: Subject<boolean> = new Subject();
   usuarios: Usuario[];
   usuario: Usuario;
   showSplash = true;
-
+  @ViewChild(ChildComponent, { static: true }) child: ChildComponent;
   constructor(
     private usuarioService: UsuarioService,
     private fireAuth: AngularFireAuth,
@@ -40,9 +44,8 @@ export class PerfilesPage {
     public locationTracker: LocationTracker,
     private fcm: FCM,
     private alertService: AlertService,
-    private backgroundGeolocation: BackgroundGeolocation
-  ) //  private geolocation: Geolocation
-  {
+    private backgroundGeolocation: BackgroundGeolocation //  private geolocation: Geolocation
+  ) {
     this.usuarios = [];
     this.startBackgroundGeolocation();
   }
@@ -61,7 +64,7 @@ export class PerfilesPage {
 
     // BUSCAR PERFILES
     interval(1000).subscribe(() => {
-      console.log('buscando usurios' + this.usuarios.length);
+      console.log("buscando usurios" + this.usuarios.length);
       if (this.usuarios.length === 0) {
         this.showSplash = true;
         this.usuarioService
@@ -156,10 +159,18 @@ export class PerfilesPage {
   }
 
   GetChildData(usuario) {
-    console.log('usaurios sin filtrados');
+    console.log("usaurios sin filtrados");
     console.log(this.usuarios);
     this.usuarios = this.usuarios.filter((p) => p.id !== usuario.id);
-    console.log('usaurios filtrados');
+    console.log("usaurios filtrados");
     console.log(this.usuarios);
+  }
+
+  like() {
+    this.estadoPerfil.next(true);
+  }
+
+  notLike() {
+    this.estadoPerfil.next(false);
   }
 }

@@ -64,4 +64,8 @@ export class UsuarioService {
   }
 
 
+  obtenerImagen(id): Observable<any> {
+    return this.http.get(this.env.API_URL + 'imagenBase64/' + id);
+  }
+
 }

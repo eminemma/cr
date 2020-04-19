@@ -1,3 +1,4 @@
+
  <ion-card class="card"
   [@slideLike]="animateLike ? 'open' : 'right'"
   [@slideNotLike]="animateNotLike ? 'open' : 'left'"
@@ -5,8 +6,15 @@
   (@slideLike.done)="finishAnimationLike()"
   (@slideNotLike.done)="finishAnimationNotLike()"    
     
-    
+    style="width: 95%;"
   >
+  <div *ngIf="showSplash" class="splash">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+  </div>
+  
     <ul>
       <li *ngFor="let item of usuario.imagenes;let i = index">
      
@@ -16,33 +24,21 @@
           (swipeleft)="startAnimationNotLike()"
           (swipeup)="showNextImage()"
           (swipedown)="showPreviousImage()"
-          [src]="usuario.imagenes[i].src"
+          [src]="imagenBase64"
           style="width: 100%;"
         />
       </li>
       <div class="carousel-indicador">
+        <div>
         <div
           class="indicador"
           *ngFor="let item of usuario.imagenes;let i = index"
           [ngClass]="{'active': i == counter}"
+          [style.width]="widthInidicador"
         ></div>
       </div>
+      </div>
     </ul>
-    <div class="menu-like">
-      <ion-button color="primary" fill="clear" (click)="notLike()"
-        ><ion-icon
-          size="large"
-          style="color:red;"
-          name="heart-dislike"
-        ></ion-icon
-      ></ion-button>
-      <ion-button color="primary" fill="clear" (click)="like()"
-        ><ion-icon size="large" style="color: #2dd36f;" name="heart"></ion-icon
-      ></ion-button>
-      <ion-button color="primary" fill="clear" (click)="match()"
-      ><ion-icon size="large" style="color: #2dd36f;" name="heart"></ion-icon
-    ></ion-button>
-    </div>
     <ion-card-header>
       <ion-card-subtitle>{{usuario.distancia}}km de distancia</ion-card-subtitle>
       <ion-card-title>{{usuario.nombre}}</ion-card-title>
@@ -51,3 +47,5 @@
       <!--{{usuario.descripcion}}-->
     </ion-card-content>
   </ion-card>
+  
+
