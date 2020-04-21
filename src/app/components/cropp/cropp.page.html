@@ -1,9 +1,9 @@
-<input type="file" *ngIf="esGalleria" (change)="fileChangeEvent($event)" />
+<!--<input type="file" *ngIf="esGalleria" (change)="fileChangeEvent($event)" />-->
 
 <!--[imageBase64] = "myImage"-->
 <!--[imageChangedEvent]="imageChangedEvent"-->
 <image-cropper *ngIf="esGalleria"
-[imageChangedEvent]="imageChangedEvent"
+[imageBase64] = "myImage"
     [maintainAspectRatio]="true"
     [aspectRatio]="4 / 5"
     format="png"

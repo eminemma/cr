@@ -11,7 +11,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-crear1',
   templateUrl: './crear1.page.html',
-  styleUrls: ['./crear1.page.scss']
+  styleUrls: ['./crear1.page.scss'],
 })
 export class Crear1Page implements OnInit {
   usuario: Usuario;
@@ -34,63 +34,61 @@ export class Crear1Page implements OnInit {
     //this.usuario.edadBusqueda = 70;
     this.usuario.edadBusquedaMin = 18;
     this.usuario.edadBusquedaMax = 45;
-    let watch = this.geolocation.watchPosition();
+    const watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
-    // data can be a set of coordinates, or an error (if an error occurred).
-    // data.coords.latitude
-    // data.coords.longitude
-    this.usuario.x = data.coords.longitude;
-    this.usuario.y = data.coords.latitude;
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+      this.usuario.x = data.coords.longitude;
+      this.usuario.y = data.coords.latitude;
     });
-    
-    this.imagenes = [
-      new ImagenCamera()
-    ];
+
+    this.imagenes = [new ImagenCamera()];
     this.usuario.imagenes = this.imagenes;
     this.loadingService.Loading();
     this.facebook
-      .login(["public_profile", "email"])
-      .then(rta => {
-        if (rta.status == "connected") {
+      .login(['public_profile', 'email'])
+      .then((rta) => {
+        if (rta.status == 'connected') {
           this.loginService
             .getInfoFacebook()
-            .then(data => {
+            .then((data) => {
               console.log(data), (this.usuario.nombre = data.name);
               this.loadingService.close();
             })
-            .catch(error => {
+            .catch((error) => {
               console.error(error);
             });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // this.alertService.presentToast(JSON.stringify(error));
         console.error(error);
       });
     // validaciones
     this.usuarioForm = this.formBuilder.group({
       sexoHombre: [false, Validators.requiredTrue],
-      sexoMujer: [false, Validators.requiredTrue]
+      sexoMujer: [false, Validators.requiredTrue],
     });
   }
 
   ngOnInit() {}
   validarSeleccionarSexo() {
-    this.usuarioForm.controls["sexoHombre"].setErrors(null);
-    this.usuarioForm.controls["sexoMujer"].setErrors(null);
+    this.usuarioForm.controls['sexoHombre'].setErrors(null);
+    this.usuarioForm.controls['sexoMujer'].setErrors(null);
     if (
-      this.usuarioForm.controls["sexoHombre"].value === false &&
-      this.usuarioForm.controls["sexoMujer"].value === false
+      this.usuarioForm.controls['sexoHombre'].value === false &&
+      this.usuarioForm.controls['sexoMujer'].value === false
     ) {
-      this.usuarioForm.controls["sexoHombre"].setErrors({ required: true });
-      this.usuarioForm.controls["sexoMujer"].setErrors({ required: true });
+      this.usuarioForm.controls['sexoHombre'].setErrors({ required: true });
+      this.usuarioForm.controls['sexoMujer'].setErrors({ required: true });
     }
   }
 
   siguiente() {
     this.usuario.id = this.fireAuth.auth.currentUser.uid;
-    this.usuario.mujer = this.usuarioForm.controls["sexoMujer"].value;
-    this.usuario.hombre = this.usuarioForm.controls["sexoHombre"].value;
-    this.router.navigate(["./crear2"], { state: this.usuario });
+    this.usuario.mujer = this.usuarioForm.controls['sexoMujer'].value;
+    this.usuario.hombre = this.usuarioForm.controls['sexoHombre'].value;
+    this.router.navigate(['./crear2'], { state: this.usuario });
   }
 }

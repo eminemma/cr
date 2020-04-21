@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CameraImagePage } from './camera-image';
 import { Usuario } from 'src/app/models/Usuario';
 import { Router } from '@angular/router';
@@ -19,38 +19,35 @@ export class Crear3Page implements OnInit {
     private fireAuth: AngularFireAuth,
     private data: DataService
   ) {
-    this.usuario =   this.router.getCurrentNavigation().extras.state.usuario as Usuario;
+    this.usuario = this.router.getCurrentNavigation().extras.state
+      .usuario as Usuario;
   }
 
-  @ViewChild(CameraImagePage, {static : false}) child: CameraImagePage;
+  @ViewChild(CameraImagePage, { static: false }) child: CameraImagePage;
 
   ngOnInit() {
-    this.data.currentMessage.subscribe(message => {
+    this.data.currentMessage.subscribe((message) => {
       if (message != null) {
-          this.usuario.imagenes[this.usuario.imagenes.length - 1] = message as ImagenCamera;
-          this.usuario.imagenes.push(new ImagenCamera());
+        this.usuario.imagenes[
+          this.usuario.imagenes.length - 1
+        ] = message as ImagenCamera;
+        this.usuario.imagenes.push(new ImagenCamera());
       }
     });
   }
 
-
   finalizarCreacionUsuario() {
-    this.fireAuth.auth.currentUser.getIdToken(true)
-    .then((token) => {
-      localStorage.setItem('token',token);
+    this.fireAuth.auth.currentUser.getIdToken(true).then((token) => {
+      localStorage.setItem('token', token);
     });
-    this.usuarioService.crearUsuario(this.usuario).subscribe(
-      done => {
-          if(done.error === false) {
-            this.router.navigate(['./principal']);
-          }
-        }
-      );
+    this.usuarioService.crearUsuario(this.usuario).subscribe((done) => {
+      if (done.error === false) {
+        this.router.navigate(['./principal']);
+      }
+    });
   }
-
 
   eliminarImagen(index: number) {
     this.usuario.imagenes.splice(index, 1);
   }
 }
-

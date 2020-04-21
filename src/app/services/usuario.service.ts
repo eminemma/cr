@@ -10,19 +10,19 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-} from "@angular/common/http";
+} from '@angular/common/http';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
   constructor(
     private env: EnvService,
     private http: HttpClient,
     private http2: HTTP
-  ) { }
+  ) {}
   usuario: any;
   // Create
-  crearUsuario(usuario: Usuario): Observable<any>  {
+  crearUsuario(usuario: Usuario): Observable<any> {
     return this.http.post(this.env.API_URL + 'usuario', usuario);
   }
 
@@ -30,7 +30,7 @@ export class UsuarioService {
     return this.http.patch(this.env.API_URL + 'usuario', usuario);
   }
 
-  getUsuario(id): Observable<any>  {
+  getUsuario(id): Observable<any> {
     return this.http.get(this.env.API_URL + 'usuario/' + id);
   }
 
@@ -44,7 +44,9 @@ export class UsuarioService {
 
   actualizarPosicon(id, x, y): Observable<any> {
     //return this.http2.get(this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y, {}, {'Authorization': localStorage.getItem("token")});
-    return this.http.get(this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y);
+    return this.http.get(
+      this.env.API_URL + 'coordenadas/' + id + '/' + x + '/' + y
+    );
   }
 
   actualizarDevice(usuario: Usuario): Observable<any> {
@@ -63,9 +65,7 @@ export class UsuarioService {
     return this.http.delete(this.env.API_URL + 'imagen/' + id);
   }
 
-
   obtenerImagen(id): Observable<any> {
     return this.http.get(this.env.API_URL + 'imagenBase64/' + id);
   }
-
 }

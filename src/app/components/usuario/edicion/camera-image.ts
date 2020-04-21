@@ -33,12 +33,12 @@ export class CameraImagePage implements OnInit {
         text: 'Tomar una foto',
         role: 'destructive',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: {  indexImage: this.indexImagen}});
+          this.route.navigate(['/cropp'], { state: {  indexImage: this.indexImagen, edicion: true}});
         }
       }, {
         text: 'Elegir desde Mis Fotos',
         handler: () => {
-          this.route.navigate(['/cropp'], { state: { indexImage: this.indexImagen, esGalleria: 'true'}});
+          this.route.navigate(['/cropp'], { state: { indexImage: this.indexImagen, esGalleria: 'true', edicion: true}});
         }
       }, {
         text: 'Elegir desde Facebook',

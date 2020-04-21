@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CameraImagePage } from 'src/app/components/usuario/crear3/camera-image';
 import { Usuario } from 'src/app/models/Usuario';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -10,7 +10,9 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
 
 import { DragulaService } from 'ng2-dragula';
 import { DataService } from 'src/app/services/data.service';
-import { LoadingService } from 'src/app/services/loading.service';
+import { LoadingController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-edicion',
   templateUrl: './edicion.page.html',
@@ -19,21 +21,69 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class EdicionPage implements OnInit {
   usuario: Usuario;
   indexHabilitar: number;
-
-  @ViewChild(CameraImagePage, {static : false}) child: CameraImagePage;
+  loader: any;
+  @ViewChild(CameraImagePage, { static: false }) child: CameraImagePage;
   constructor(
     private usuarioService: UsuarioService,
     private fireAuth: AngularFireAuth,
     private dragulaService: DragulaService,
     private data: DataService,
-    private loadingService: LoadingService
+    private loadingController: LoadingController,
+    public alertController: AlertController
   ) {
     this.usuario = new Usuario();
     this.indexHabilitar = 0;
+
+    this.dragulaService
+      .drop('bag')
+      .subscribe(({ name, el, target, source, sibling }) => {
+        // hire is your code
+        //console.log(el.id);
+        //console.log(el.getAttribute('position'));
+        //console.log(this.getElementIndex(el));
+
+        const imagenes: ImagenCamera[] = new Array();
+        for (let i = 0; i < this.usuario.imagenes.length; i++) {
+          const imagen = new ImagenCamera();
+          imagen.src = null;
+          imagen.posicion = i;
+          imagen.id = this.usuario.imagenes[i].id;
+          imagenes.push(imagen);
+        }
+        this.loading();
+        this.usuarioService
+          .modificarPosicionImagenes(imagenes)
+          .subscribe((done) => {
+            this.loader.dismiss();
+          });
+      });
+    this.cargarDatos();
+
+    this.data.currentMessage.subscribe((message) => {
+      if (message != null) {
+        this.loading();
+        this.usuarioService
+          .guardarImagen(message as ImagenCamera)
+          .subscribe((done) => {
+            this.loader.dismiss();
+            this.cargarDatos();
+          });
+      }
+    });
+  }
+  async loading() {
+    this.loader = await this.loadingController.create({
+      message: 'Cargando...',
+      translucent: true,
+    });
+    this.loader.present();
+  }
+
+  ngOnInit() {
     this.dragulaService.createGroup('bag', {
       moves: (el, container, handle): any => {
         if (el.classList.contains('test')) {
-         return false;
+          return false;
         }
         return true;
       },
@@ -41,66 +91,31 @@ export class EdicionPage implements OnInit {
         // To avoid draggin from right to left container
         return true;
       },
-      copySortSource: false,             // elements in copy-source containers can be reordered
-      revertOnSpill: false,              // spilling will put the element back where it was dragged from, if this is true
-      removeOnSpill: false,              // spilling will `.remove` the element, if this is true
-    });
-
-    this.dragulaService.drop('bag').subscribe(({name, el, target, source, sibling}) => {
-          // hire is your code
-          //console.log(el.id);
-          //console.log(el.getAttribute('position'));
-          //console.log(this.getElementIndex(el));
-
-          const imagenes: ImagenCamera[] = new Array();
-          for (let i = 0; i < this.usuario.imagenes.length; i++) {
-            const imagen = new ImagenCamera();
-            imagen.src = null;
-            imagen.posicion = i;
-            imagen.id = this.usuario.imagenes[i].id;
-            imagenes.push(imagen);
-          }
-          this.loadingService.Loading();
-          this.usuarioService.modificarPosicionImagenes(imagenes).subscribe(
-            done => {
-              this.loadingService.close();
-            }
-          );
-        });
-  }
-  private getElementIndex(el: any) {
-    return [].slice.call(el.parentElement.children).indexOf(el);
-}
-
-
-  ngOnInit() {
-    this.cargarDatos();
-    this.data.currentMessage.subscribe(message => {
-      if (message != null) {
-        this.loadingService.Loading();
-        this.usuarioService.guardarImagen(message as ImagenCamera).subscribe((done)=>{
-          this.loadingService.close();
-          this.cargarDatos();
-        });
-      }
+      copySortSource: false, // elements in copy-source containers can be reordered
+      revertOnSpill: false, // spilling will put the element back where it was dragged from, if this is true
+      removeOnSpill: false, // spilling will `.remove` the element, if this is true
     });
   }
 
-  cargarDatos(){
-    this.loadingService.Loading();
-    this.usuarioService.getUsuario(this.fireAuth.auth.currentUser.uid).subscribe(user => {
-      this.usuario = user;
-      this.habilitarBoton();
-      this.loadingService.close();
-    });
+  cargarDatos() {
+    this.loading();
+    this.usuarioService
+      .getUsuario(this.fireAuth.auth.currentUser.uid)
+      .subscribe((user) => {
+        this.usuario = user;
+        this.habilitarBoton();
+        this.loader.dismiss();
+      });
   }
 
   eliminarImagen(index: number) {
-    this.loadingService.Loading();
-    this.usuarioService.eliminarImagen(this.usuario.imagenes[index].id).subscribe(done => {
-        this.loadingService.close();
+    this.loading();
+    this.usuarioService
+      .eliminarImagen(this.usuario.imagenes[index].id)
+      .subscribe((done) => {
+        this.loader.dismiss();
         this.cargarDatos();
-    });    
+      });
   }
 
   setHabilitarIndex(indexHabilitar) {
@@ -108,11 +123,43 @@ export class EdicionPage implements OnInit {
   }
 
   habilitarBoton() {
-    if (this.usuario.imagenes.length === 0 || this.usuario.imagenes[this.usuario.imagenes.length - 1].src !== undefined) {
+    if (
+      this.usuario.imagenes.length === 0 ||
+      this.usuario.imagenes[this.usuario.imagenes.length - 1].src !== undefined
+    ) {
       this.usuario.imagenes[this.usuario.imagenes.length] = new ImagenCamera();
-      this.indexHabilitar = (this.usuario.imagenes.length - 1);
-      }
+      this.indexHabilitar = this.usuario.imagenes.length - 1;
+    }
   }
 
-}
+  async agregarTexto() {
+    const alert = await this.alertController.create({
+      header: 'Frase',
+      subHeader: 'Esta frase va a ir junto a tu imagen en tu perfil',
+      inputs: [
+        {
+          name: 'name1',
+          type: 'textarea',
+          placeholder: 'Una frase para tu nueva imagen'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+  }
+}

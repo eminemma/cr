@@ -7,6 +7,7 @@ import { PerfilesPage } from './perfiles.page';
 import { ChildComponent } from './card-persona';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+import { AdsenseModule } from 'ng2-adsense';
 
 @NgModule({
   imports: [
@@ -15,6 +16,12 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
     FormsModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: PerfilesPage }])
+    ,
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-4846024327481940',
+      adSlot: 7259870550,
+      adtest: 'on'
+    })
   ],
   declarations: [PerfilesPage, ChildComponent]
 })

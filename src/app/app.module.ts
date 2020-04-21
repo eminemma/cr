@@ -54,6 +54,7 @@ import { LocationTracker } from '../app/providers/location-tracker';
 import { DragulaModule } from 'ng2-dragula';
 
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { AdsenseModule } from 'ng2-adsense';
 
 export class CustomHammerConfig extends HammerGestureConfig{
   overrides = <any> {
@@ -91,7 +92,14 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    DragulaModule.forRoot()],
+    DragulaModule.forRoot(),
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-4846024327481940',
+      adSlot: 7259870550,
+      adtest: 'on'
+    })
+  
+  ],
   providers: [
     StatusBar,
     SplashScreen,

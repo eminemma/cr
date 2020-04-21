@@ -8,6 +8,7 @@
     padding-left: 10px;" [attr.position]="i" [attr.id]="imagen.id"
   >
     <camera-image-component
+      (click)="agregarTexto()"
       class="small-photo"
       [indexImagen]="i"
       [imagen]="imagen"

@@ -14,10 +14,8 @@ import { EnvService } from 'src/app/services/env.service';
 import * as jwt_decode from 'jwt-decode';
 export const TOKEN_NAME: string = 'token';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-
 export class LoginServiceService {
   isLogged = false;
   usuario: Usuario;
@@ -27,57 +25,58 @@ export class LoginServiceService {
     private fireAuth: AngularFireAuth,
     private router: Router,
     private env: EnvService,
-    private http: HttpClient) { }
+    private http: HttpClient
+  ) {}
 
   loginFacebook() {
     this.facebook
       .login(['public_profile', 'email'])
-      .then(rta => {
-         if (rta.status == 'connected') {
+      .then((rta) => {
+        if (rta.status == 'connected') {
           const credential = firebase.auth.FacebookAuthProvider.credential(
             rta.authResponse.accessToken
           );
           //this.fireAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
-          this.fireAuth.auth.signInWithCredential(credential).then(response => {
-            // this.router.navigate(['/profile']);
-            // this.loading.dismiss();
-            this.fireAuth.auth.currentUser.getIdToken(false)
-            .then((token) => {
-              localStorage.setItem('token',token);
+          this.fireAuth.auth
+            .signInWithCredential(credential)
+            .then((response) => {
+              // this.router.navigate(['/profile']);
+              // this.loading.dismiss();
+              this.fireAuth.auth.currentUser.getIdToken(false).then((token) => {
+                localStorage.setItem('token', token);
+              });
+              this.fireAuth.auth.onAuthStateChanged((user) => {
+                if (user) {
+                  this.router.navigate(['/principal']);
+                }
+              });
             });
-            this.fireAuth.auth.onAuthStateChanged(user => {
-              if (user) {
-                this.router.navigate(['/principal']);
-              }
-            });
-          });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.alertService.presentToast(JSON.stringify(error));
         console.error(error);
       });
   }
 
   getInfoFacebook() {
-    return this.facebook
-      .api('/me?fields=id,name,email,first_name,picture,last_name,gender', [
-        'public_profile',
-        'email'
-      ]);
+    return this.facebook.api(
+      '/me?fields=id,name,email,first_name,picture,last_name,gender',
+      ['public_profile', 'email']
+    );
   }
 
   isLoggedIn(): Observable<boolean> {
     return this.fireAuth.authState.pipe(
       take(1),
-      map(authState => !!authState)
+      map((authState) => !!authState)
     );
   }
 
   public isLoggedIn2() {
     return this.fireAuth.authState.pipe(first()).toPromise();
-}
+  }
 
   logout() {
     this.fireAuth.auth.signOut().then(() => {
@@ -97,11 +96,11 @@ export class LoginServiceService {
   }
 
   isTokenExpired(token?: string): boolean {
-    if(!token) token = this.getToken();
-    if(!token) return true;
+    if (!token) token = this.getToken();
+    if (!token) return true;
 
     const date = this.getTokenExpirationDate(token);
-    if(date === undefined) return false;
+    if (date === undefined) return false;
     return !(date.valueOf() > new Date().valueOf());
   }
 
