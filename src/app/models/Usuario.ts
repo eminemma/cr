@@ -20,4 +20,7 @@ export class Usuario {
 
   //device para mandar mensaje
   public idDevice: any;
+
+  //spotify id
+  public idSpotify: string;
 }

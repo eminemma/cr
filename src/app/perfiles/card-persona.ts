@@ -5,7 +5,7 @@ import {
   Output,
   ElementRef,
   Renderer,
-} from "@angular/core";
+} from '@angular/core';
 import {
   trigger,
   keyframes,
@@ -13,59 +13,77 @@ import {
   transition,
   state,
   style,
-} from "@angular/animations";
-import { AlertService } from "src/app/services/alert.service";
-import { DomController } from "@ionic/angular";
-import { Evento } from "src/app/models/Evento";
-import { Usuario } from "src/app/models/Usuario";
-import { EventoService } from "src/app/services/evento.service";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { ModalController } from "@ionic/angular";
-import { MatchPage } from "src/app/components/match/match.page";
-import { ChatService } from "../services/chat.service";
-import { Chat } from "../models/Chat";
-import { UsuarioService } from "../services/usuario.service";
-import { Subject } from "rxjs";
+} from '@angular/animations';
+import { AlertService } from 'src/app/services/alert.service';
+import { DomController } from '@ionic/angular';
+import { Evento } from 'src/app/models/Evento';
+import { Usuario } from 'src/app/models/Usuario';
+import { EventoService } from 'src/app/services/evento.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { ModalController } from '@ionic/angular';
+import { MatchPage } from 'src/app/components/match/match.page';
+import { ChatService } from '../services/chat.service';
+import { Chat } from '../models/Chat';
+import { UsuarioService } from '../services/usuario.service';
+import { Subject } from 'rxjs';
 @Component({
-  selector: "card-persona-component",
-  templateUrl: "card-persona.html",
-  styleUrls: ["card-persona.css"],
+  selector: 'card-persona-component',
+  templateUrl: 'card-persona.html',
+  styleUrls: ['card-persona.css'],
   animations: [
-    trigger("slideLike", [
+    trigger('slideLike', [
       state(
-        "open",
+        'open',
         style({
-          transform: "translate3d(0, 0, 0)",
+          transform: 'translate3d(0, 0, 0)',
           // opacity: 1,
         })
       ),
       state(
-        "right",
+        'right',
         style({
-          transform: "translate3d(100%, 0, 0)",
-          visibility: "hidden",
+          transform: 'translate3d(100%, 0, 0)',
+          visibility: 'hidden',
           //   opacity: 0
         })
       ),
-      transition("open => right", [animate("0.55s")]),
+      transition('open => right', [animate('0.55s')]),
     ]),
-    trigger("slideNotLike", [
+    trigger('slideNotLike', [
       state(
-        "open",
+        'open',
         style({
-          transform: "translate3d(0, 0, 0)",
+          transform: 'translate3d(0, 0, 0)',
           // opacity: 1,
         })
       ),
       state(
-        "left",
+        'left',
         style({
-          transform: "translate3d(-150%, 0, 0)",
-          visibility: "hidden",
+          transform: 'translate3d(-150%, 0, 0)',
+          visibility: 'hidden',
           //   opacity: 0
         })
       ),
-      transition("open => left", [animate("0.55s")]),
+      transition('open => left', [animate('0.55s')]),
+    ]),
+    trigger('slideSuperLike', [
+      state(
+        'open',
+        style({
+          transform: 'translate3d(0, 0, 0)',
+          // opacity: 1,
+        })
+      ),
+      state(
+        'up',
+        style({
+          transform: 'translate3d(0, -150%, 0)',
+          visibility: 'hidden',
+          //   opacity: 0
+        })
+      ),
+      transition('open => up', [animate('0.55s')]),
     ]),
   ],
 })
@@ -73,14 +91,15 @@ export class ChildComponent {
   counter = 0;
   animateLike = true;
   animateNotLike = true;
+  animateSuperLike = true;
   animateUp = true;
-  @Input() cambiandoEstadoPerfil: Subject<boolean>;
+  @Input() cambiandoEstadoPerfil: Subject<number>;
   @Input() usuario: Usuario;
   @Output() usuarioSeleccionada: EventEmitter<object> = new EventEmitter();
   x = 0;
   y = 0;
-  left = "";
-  top = "";
+  left = '';
+  top = '';
   evento: Evento;
   currentModal = null;
   startX = 0;
@@ -90,7 +109,7 @@ export class ChildComponent {
   usuario_segundo_id;
   imagenBase64: any;
   showSplash = true;
-  widthInidicador: string  = '10px';
+  widthInidicador: string = '10px';
   constructor(
     private alertService: AlertService,
     public element: ElementRef,
@@ -104,24 +123,24 @@ export class ChildComponent {
   ) {}
 
   ngAfterViewInit() {
-    let hammer = new window["Hammer"](this.element.nativeElement);
+    let hammer = new window['Hammer'](this.element.nativeElement);
 
-    hammer.on("pan", (ev) => {
+    hammer.on('pan', (ev) => {
       this.handlePan(ev);
     });
 
-    hammer.on("panend", (ev) => {
+    hammer.on('panend', (ev) => {
       this.handlePanEnd(ev);
     });
 
-    hammer.on("tap", (ev) => {
+    hammer.on('tap', (ev) => {
       this.handleTap(ev);
     });
   }
   handleTap(ev) {
     const centro = this.element.nativeElement.offsetWidth / 2;
     const xTap = ev.center.x;
-    console.log("centro");
+    console.log('centro');
     console.log(this.element.nativeElement);
     if (centro < xTap) {
       this.showNextImage();
@@ -136,12 +155,12 @@ export class ChildComponent {
     this.domCtrl.write(() => {
       this.renderer.setElementStyle(
         this.element.nativeElement,
-        "transition-duration",
-        "0s"
+        'transition-duration',
+        '0s'
       );
       this.renderer.setElementStyle(
         this.element.nativeElement,
-        "transform",
+        'transform',
         `translate(${deltaX}px,${deltaY}px)`
       );
     });
@@ -154,12 +173,12 @@ export class ChildComponent {
     this.domCtrl.write(() => {
       this.renderer.setElementStyle(
         this.element.nativeElement,
-        "transition-duration",
-        "0.55s"
+        'transition-duration',
+        '0.55s'
       );
       this.renderer.setElementStyle(
         this.element.nativeElement,
-        "transform",
+        'transform',
         `translate(${deltaX}px,${deltaY}px)`
       );
     });
@@ -169,8 +188,8 @@ export class ChildComponent {
     this.x = this.startX + event.deltaX;
     this.y = this.startY + event.deltaY;
 
-    this.left = this.x + "px";
-    this.top = this.y + "px";
+    this.left = this.x + 'px';
+    this.top = this.y + 'px';
   }
   showNextImage() {
     if (this.counter < this.usuario.imagenes.length - 1) {
@@ -192,12 +211,12 @@ export class ChildComponent {
     if (this.animateLike === false) {
       this.usuarioSeleccionada.emit(this.usuario);
       this.evento = new Evento();
-      this.evento.evento = "like";
+      this.evento.evento = 'like';
       this.evento.estado = 1;
       this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
       this.evento.usuarioRecibeId = this.usuario.id;
       this.eventoService.like(this.evento).subscribe((message) => {
-        if (message.codigo === "match") {
+        if (message.codigo === 'match') {
           // Schedule a single notification
           // Schedule delayed notification
           this.usuario_primer_id = message.usuario_primer_id;
@@ -208,10 +227,10 @@ export class ChildComponent {
           chat.idSegundoUsuario = this.usuario_segundo_id;
           chat.creado = new Date().getTime();
           this.chatService.crearChat(chat);
-          this.alertService.presentToast("Match");
+          this.alertService.presentToast('Match');
         }
       });
-      this.alertService.presentToast("Like");
+      this.alertService.presentToast('Like');
     }
   }
 
@@ -222,13 +241,13 @@ export class ChildComponent {
     if (this.animateNotLike === false) {
       this.usuarioSeleccionada.emit(this.usuario);
       this.evento = new Evento();
-      this.evento.evento = "dislike";
+      this.evento.evento = 'dislike';
       this.evento.estado = 1;
       this.evento.usuarioEnviaId = this.fireAuth.auth.currentUser.uid;
       this.evento.usuarioRecibeId = this.usuario.id;
 
       this.eventoService.like(this.evento).subscribe((message) => {});
-      this.alertService.presentToast("disLike");
+      this.alertService.presentToast('disLike');
     }
   }
 
@@ -240,6 +259,19 @@ export class ChildComponent {
     this.startAnimationNotLike();
   }
 
+  superLike() {
+    console.log('animar superlike');
+    this.startAnimationSuperLike();
+  }
+
+  startAnimationSuperLike() {
+    this.animateSuperLike = false;
+  }
+  finishAnimationSuperLike() {
+    if (this.animateSuperLike === false) {
+    this.usuarioSeleccionada.emit(this.usuario);
+    }
+  }
   async match() {
     const modal = await this.modalController.create({
       component: MatchPage,
@@ -253,17 +285,20 @@ export class ChildComponent {
   }
 
   ngOnInit() {
-    console.log("Imagen inicial");
+    console.log('Imagen inicial');
     console.log(this.usuario.imagenes);
     this.buscarImagen(0);
-    this.widthInidicador = (240 / this.usuario.imagenes.length).toString() + 'px';
+    this.widthInidicador =
+      (240 / this.usuario.imagenes.length).toString() + 'px';
     console.log(this.widthInidicador);
 
     this.cambiandoEstadoPerfil.subscribe((v) => {
-      if(v === true){
-        this.like();
-      }else{
+      if (v === 0) {
         this.notLike();
+      } else if (v === 1) {
+        this.like();
+      } else {
+        this.superLike();
       }
     });
   }
@@ -277,4 +312,6 @@ export class ChildComponent {
         this.showSplash = false;
       });
   }
+
+
 }

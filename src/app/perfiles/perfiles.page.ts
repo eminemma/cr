@@ -1,35 +1,35 @@
-import { Component, ViewChild } from "@angular/core";
-import { UsuarioService } from "../services/usuario.service";
-import { LoadingService } from "src/app/services/loading.service";
-import { interval, Observable } from "rxjs";
-import { filter, map } from "rxjs/operators";
-import { Usuario } from "src/app/models/Usuario";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { EnvService } from "src/app/services/env.service";
-import { Geolocation } from "@ionic-native/geolocation/ngx";
-import { AlertService } from "src/app/services/alert.service";
-import { FCM } from "@ionic-native/fcm/ngx";
-import { LocationTracker } from "../../app/providers/location-tracker";
+import { Component, ViewChild } from '@angular/core';
+import { UsuarioService } from '../services/usuario.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { interval, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { Usuario } from 'src/app/models/Usuario';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EnvService } from 'src/app/services/env.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AlertService } from 'src/app/services/alert.service';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { LocationTracker } from '../../app/providers/location-tracker';
 
 import {
   BackgroundGeolocation,
   BackgroundGeolocationConfig,
   BackgroundGeolocationResponse,
   BackgroundGeolocationEvents,
-} from "@ionic-native/background-geolocation/ngx";
-import { HTTP } from "@ionic-native/http/ngx";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-import { ChildComponent } from "./card-persona";
-import { Subject } from "rxjs";
+} from '@ionic-native/background-geolocation/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ChildComponent } from './card-persona';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: "app-tab1",
-  templateUrl: "perfiles.page.html",
-  styleUrls: ["perfiles.page.scss"],
+  selector: 'app-tab1',
+  templateUrl: 'perfiles.page.html',
+  styleUrls: ['perfiles.page.scss'],
 })
 export class PerfilesPage {
-  estadoPerfil: Subject<boolean> = new Subject();
+  estadoPerfil: Subject<number> = new Subject();
   usuarios: Usuario[];
   usuario: Usuario;
   showSplash = true;
@@ -64,7 +64,7 @@ export class PerfilesPage {
 
     // BUSCAR PERFILES
     interval(1000).subscribe(() => {
-      console.log("buscando usurios" + this.usuarios.length);
+      console.log('buscando usurios' + this.usuarios.length);
       if (this.usuarios.length === 0) {
         this.showSplash = true;
         this.usuarioService
@@ -91,7 +91,7 @@ export class PerfilesPage {
   }
 
   startBackgroundGeolocation() {
-    console.log("Background1");
+    console.log('Background1');
     const config: BackgroundGeolocationConfig = {
       desiredAccuracy: 0,
       stationaryRadius: 20,
@@ -100,7 +100,7 @@ export class PerfilesPage {
       stopOnTerminate: false, // enable this to clear background location settings when the app terminates
       interval: 1000,
     };
-    console.log("Background");
+    console.log('Background');
     this.backgroundGeolocation.configure(config).then(() => {
       this.backgroundGeolocation
         .on(BackgroundGeolocationEvents.location)
@@ -159,18 +159,22 @@ export class PerfilesPage {
   }
 
   GetChildData(usuario) {
-    console.log("usaurios sin filtrados");
+    console.log('usaurios sin filtrados');
     console.log(this.usuarios);
     this.usuarios = this.usuarios.filter((p) => p.id !== usuario.id);
-    console.log("usaurios filtrados");
+    console.log('usaurios filtrados');
     console.log(this.usuarios);
   }
 
   like() {
-    this.estadoPerfil.next(true);
+    this.estadoPerfil.next(1);
   }
 
   notLike() {
-    this.estadoPerfil.next(false);
+    this.estadoPerfil.next(0);
+  }
+
+  superLike() {
+    this.estadoPerfil.next(2);
   }
 }

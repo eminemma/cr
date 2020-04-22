@@ -2,10 +2,10 @@
  <ion-card class="card"
   [@slideLike]="animateLike ? 'open' : 'right'"
   [@slideNotLike]="animateNotLike ? 'open' : 'left'"
-  
+  [@slideSuperLike]="animateSuperLike ? 'open' : 'up'"
   (@slideLike.done)="finishAnimationLike()"
-  (@slideNotLike.done)="finishAnimationNotLike()"    
-    
+  (@slideNotLike.done)="finishAnimationNotLike()"  
+  (@slideSuperLike.done)="finishAnimationSuperLike()" 
     style="width: 95%;"
   >
   <div *ngIf="showSplash" class="splash">

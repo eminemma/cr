@@ -12,6 +12,7 @@ import { DragulaService } from 'ng2-dragula';
 import { DataService } from 'src/app/services/data.service';
 import { LoadingController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
   selector: 'app-edicion',
@@ -22,6 +23,8 @@ export class EdicionPage implements OnInit {
   usuario: Usuario;
   indexHabilitar: number;
   loader: any;
+  
+  tracks: any[];
   @ViewChild(CameraImagePage, { static: false }) child: CameraImagePage;
   constructor(
     private usuarioService: UsuarioService,
@@ -29,7 +32,8 @@ export class EdicionPage implements OnInit {
     private dragulaService: DragulaService,
     private data: DataService,
     private loadingController: LoadingController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public spotifyService: SpotifyService
   ) {
     this.usuario = new Usuario();
     this.indexHabilitar = 0;
@@ -140,8 +144,8 @@ export class EdicionPage implements OnInit {
         {
           name: 'name1',
           type: 'textarea',
-          placeholder: 'Una frase para tu nueva imagen'
-        }
+          placeholder: 'Una frase para tu nueva imagen',
+        },
       ],
       buttons: [
         {
@@ -150,16 +154,41 @@ export class EdicionPage implements OnInit {
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
-          }
-        }, {
+          },
+        },
+        {
           text: 'Ok',
           handler: () => {
             console.log('Confirm Ok');
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
+  }
+
+  loginSpotify() {
+    this.spotifyService
+      .loginSpotify()
+      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+        let result = {
+          access_token: accessToken,
+          expires_in: expiresAt,
+          ref: encryptedRefreshToken,
+        };
+        console.log(result);
+        console.log('Buscar datos del usuario');
+
+        this.spotifyService
+          .traerUsuarioPlaylist(accessToken)
+          .subscribe(
+            (tracks: any) => {
+              this.tracks = tracks.items;
+              console.log(tracks);
+            },
+            (error) => console.log(error)
+          );
+      });
   }
 }
