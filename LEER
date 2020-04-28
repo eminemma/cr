@@ -1,0 +1,236 @@
+/* 
+Apache Cordova, which will take 
+our app and bundle it into a native wrapper to turn it into a traditional native app
+*/
+npm install -g cordova
+/*
+instalar ionic framework toolkit para construir aplicaciones  
+*/
+npm install -g ionic
+/*
+Crear proyecto inicial 3 opciones
+1 - proyecto blanco
+2 - proyecto con tabs
+3 - proyecto con una barra de navegacion desplazable
+*/
+ionic start myApp blank
+ionic start myApp tabs
+ionic start myApp sidemenu
+/*
+Segun para que mobile se quiere desarrollar 
+Android
+Iphone
+*/
+ionic cordova platform add android
+ionic cordova platform add ios
+/*
+ejecutar aplicacion en navegador
+*/
+ionic serve
+/*
+Compilar para android
+*/
+ionic cordova build android
+/*
+Emular en windows en un emulador especifico
+*/
+ionic cordova run android --target=Nexus_4_API_24 Nexus_5X_API_24
+ionic cordova run android --target=Nexus_5X_API_24 
+/*ionic generate component tipo ionic*/
+ionic generate page auth/login
+ionic generate page menu
+
+/*
+Generar servicios
+*/
+ionic generate service services/auth
+
+/*
+Basico Authenticacion
+*/
+ionic generate service services/auth
+ionic generate service services/alert
+ionic generate model models/User
+ionic generate service services/env
+
+https://blog.flicher.net/ionic-4-user-registration-login-tutorial/
+https://www.techiediaries.com/ionic-ui-forms-theming/
+https://www.freecodecamp.org/news/how-to-get-push-notifications-working-with-ionic-4-and-firebase-ad87cc92394e/
+/*
+Para guardar datos de manera local
+*/
+ionic cordova plugin add cordova-plugin-nativestorage
+/*
+Ejecutar cordova en el navegador
+*/
+ionic cordova run browser
+
+iconos
+https://ionicons.com/
+
+https://www.youtube.com/watch?v=UkpAQT21xBM
+notificaciones push con firebase
+ionic cordova plugin add cordova-plugin-fcm-with-dependecy-updated
+npm install @ionic-native/fcm
+
+en app.module
+import { FCM } from '@ionic-native/fcm/ngx';
+
+y como provider en el mismo archivo
+FCM
+
+En el app.component.ts
+ this.fcm.getToken().then(
+        (token: string) => {
+          console.log("este es el token para este dispositivo" + token);
+        }
+      ).catch(error =>{
+        console.log(error);
+      });
+
+      this.fcm.onTokenRefresh().subscribe((token: string) => {
+        console.log("actualizacon de token" + token);
+      });
+
+      this.platform.ready().then(() => {
+        this.fcm.onNotification().subscribe( data => {
+          if(data.wasTapped){
+            console.log("mensaje 1");
+          }else{
+            console.log("mensaje 2");
+          }
+        });
+      });
+
+
+
+//internationalization string global
+https://blog.ng-classroom.com/blog/ionic2/ngx-translate/
+
+
+
+//facebook login
+npm install --save @ionic-native/facebook
+      https://blog.ng-classroom.com/blog/ionic2/facebook-and-ionic/
+//HASH PARA FACEBOOK
+https://medium.com/enappd/facebook-login-in-ionic-4-apps-using-firebase-d765c76f79ab
+ionic cordova plugin remove cordova-plugin-facebook4 --variable APP_ID="223402129033438" --variable APP_NAME="crush"
+ionic cordova platform remove browser
+ionic cordova plugin add cordova-plugin-facebook4 --save --variable APP_ID="223402129033438" --variable APP_NAME="crush"
+ionic cordova platform add browser
+
+
+
+keytool -exportcert -alias androiddebugkey -keystore %HOMEPATH%\.android\debug.keystore | openssl sha1 -binary | openssl base64
+Introduzca la contraseña del almacén de claves:  android
+
+Warning:
+El almacén de claves JKS utiliza un formato propietario. Se recomienda migrar a PKCS12, que es un formato estándar del sector que utiliza "keytool -importkeystore -srckeystore \Users\emma\.android\debug.keystore -destkeystore \Users\emma\.android\debug.keystore -deststoretype pkcs12".
+ZbjQSYw/4bcqHzNWU4beQ6PULwM=
+
+
+For the browser platform, the plugin seems to be using the post prepare plugin to populate the APP_ID. It assumes this is specified in config.xml in the root of the project. I am not sure why - but this was missing in my config generating the error.
+
+Adding this line to config.xml, seems to resolve the problems
+
+    <preference name="APP_ID" value="0123456789"/>
+Note: the implementation seems to be based on an inline replacement of the special token "APP_ID" in several files (see plugins/cordova-plugin-facebook4/scripts/after_prepare.js).
+
+In my situation this had been set to null (presumably the first time it ran without the above entry in config.xml). To resolve this I reinstalled the plugin and browser platform.
+
+$ ionic cordova plugin remove cordova-plugin-facebook4
+$ ionic cordova platform remove browser
+$ ionic cordova plugin add cordova-plugin-facebook4 --save --variable APP_ID="0123456789" --variable APP_NAME="myApp"
+$ ionic cordova platform add browser
+
+https browser
+ionic cordova run browser --livereload --ssl
+
+//TOAST MESSAGE
+https://ionicframework.com/docs/v3/api/components/toast/ToastController/
+
+//Animaciones
+https://fireship.io/lessons/hammerjs-angular-5-animations-for-mobile-gestures-tutorial/
+
+//Geolocalizacion
+https://ionicframework.com/docs/native/geolocation
+https://www.npmjs.com/package/@ionic-native/google-maps
+
+https://github.com/ionic-team/ionic-native-google-maps/blob/master/documents/README.md
+https://github.com/ionic-team/ionic-native-google-maps/blob/master/documents/api_key/generate_api_key.md
+
+https://ionicthemes.com/tutorials/about/setting-up-a-database-for-an-ionic-app-with-firebase
+
+
+https://stackoverflow.com/questions/47118760/how-to-take-or-choose-image-from-gallery-in-ionic-3/47120267
+//Recuperar config.xml
+ionic integrations enable cordova --add
+
+//Libreria cropp, para rectorar las fotos de la camara y la galeria manteniendo aspecto ratio
+ionic generate page components/cropp
+
+//Splash Screen
+ionic cordova plugin add cordova-plugin-splashscreen
+npm install @ionic-native/splash-screen
+
+ejempls de splash screen
+https://tobiasahlin.com/spinkit/
+
+//crear recursos para android e ios automaticamente segun las imagenes colocadas en resources del proyecto
+ionic cordova resources
+
+
+//CUSTOM JWT CON FIREBASE Authenticacion
+https://firebase.google.com/docs/auth/admin/create-custom-tokens?hl=es-419
+https://codetocode.es/2016/10/26/validacion-de-token-firebase-en-un-servicio-restful-creado-con-php/
+
+//Paginas utiles
+//Convertir time to date leible
+https://www.epochconverter.com/
+//decode token jwt
+https://jwt.io/
+
+ALTER TABLE eventos
+ADD FOREIGN KEY (usuario_recibe_id) REFERENCES usuario(id);
+
+
+COMPOSER
+composer dumpautoload -o  //ACTUALIZAR
+
+
+//FACEBOOK USUARIOS DE PRUEBA
+https://developers.facebook.com/apps/223402129033438/roles/test-users/
+Se ha creado correctamente el siguiente usuario de prueba.
+Name	
+Richard Aldihacadcadg Goldmanman
+User ID	100049813143147
+Login email	emsolpl_goldmanman_1585963421@tfbnw.net
+Login password	tj9yqp0y26b
+
+
+https://www.djamware.com/post/5c6ccd1f80aca754f7a9d1ec/push-notification-using-ionic-4-and-firebase-cloud-messaging
+
+//DRAG AND DROP
+https://medium.com/angular-in-depth/exploring-drag-and-drop-with-the-angular-material-cdk-2e0237857290
+
+//instagrama developer
+https://essnappy.appypie.com/faqs/how-to-integrate-instagram-client-id-and-client-secret-key
+https://firebase.googleblog.com/2016/10/authenticate-your-firebase-users-with.html
+
+//spotify
+https://developer.spotify.com/dashboard/applications/9e46d3c1cf1d4b75bcd6842109b67366
+https://devdactic.com/ionic-spotify-app-oauth/
+https://devdactic.com/ionic-spotify-app-native-spotify/
+
+
+//instagram
+https://levelup.gitconnected.com/getting-started-with-the-instagram-basic-display-api-5124c92c4935
+https://www.programmingsnippet.com/instagram-api-get-access-token-php/
+https://developers.facebook.com/docs/instagram-basic-display-api/reference/media
+https://rudrastyh.com/instagram/get-recent-photos-php.html
+
+LONG token
+https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens
+https://developers.facebook.com/docs/instagram-basic-display-api/guides/getting-profiles-and-media?locale=en_US
+
+https://community.spotify.com/t5/Content-Questions/Songs-only-able-listning-30-seconds-to/td-p/1341156/page/6
