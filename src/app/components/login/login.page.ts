@@ -9,14 +9,12 @@ import { LoginServiceService } from 'src/app/services/login-service.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss']
 })
-export class LoginPage implements OnInit {
+export class LoginPage{
   constructor(
     private router: Router,
     private loginService: LoginServiceService
   ) {}
 
-  ngOnInit() {
-  }
 
   ionViewWillEnter() {
     this.loginService.isLoggedIn2().then((value) => {

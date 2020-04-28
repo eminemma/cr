@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -21,7 +25,10 @@ import { environment } from '../environments/environment';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { HammerGestureConfig, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
 import * as Hammer from 'hammerjs';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -38,7 +45,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { AuthInterceptor } from 'src/app/services/AuthInterceptor';
 
-import { LocalNotifications} from '@ionic-native/local-notifications/ngx'
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Firebase } from '@ionic-native/firebase/ngx';
@@ -46,9 +53,8 @@ import { MatchPageModule } from './components/match/match.module';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-
-import { BackgroundGeolocation } from "@ionic-native/background-geolocation/ngx";
-import { HTTP } from "@ionic-native/http/ngx";
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 import { LocationTracker } from '../app/providers/location-tracker';
 
 import { DragulaModule } from 'ng2-dragula';
@@ -56,13 +62,11 @@ import { DragulaModule } from 'ng2-dragula';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { AdsenseModule } from 'ng2-adsense';
 
-export class CustomHammerConfig extends HammerGestureConfig{
-  overrides = <any> {
+export class CustomHammerConfig extends HammerGestureConfig {
+  overrides = <any>{
     swipe: { direction: Hammer.DIRECTION_ALL },
   };
 }
-
-
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,7 +75,6 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    
     DragDropModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -88,17 +91,16 @@ export function createTranslateLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
     }),
     DragulaModule.forRoot(),
     AdsenseModule.forRoot({
       adClient: 'ca-pub-4846024327481940',
       adSlot: 7259870550,
-      adtest: 'on'
-    })
-  
+      adtest: 'on',
+    }),
   ],
   providers: [
     StatusBar,
@@ -108,7 +110,7 @@ export function createTranslateLoader(http: HttpClient) {
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Facebook,
-    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig},
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     Geolocation,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     LocalNotifications,
@@ -118,10 +120,8 @@ export function createTranslateLoader(http: HttpClient) {
     BackgroundGeolocation,
     HTTP,
     LocationTracker,
-    BackgroundMode
+    BackgroundMode,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
-
+export class AppModule {}

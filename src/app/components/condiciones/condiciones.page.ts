@@ -5,11 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './condiciones.page.html',
   styleUrls: ['./condiciones.page.scss'],
 })
-export class CondicionesPage implements OnInit {
+export class CondicionesPage {
 
   constructor() { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
 }

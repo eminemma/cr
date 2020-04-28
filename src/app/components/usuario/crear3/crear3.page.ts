@@ -11,7 +11,7 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
   templateUrl: './crear3.page.html',
   styleUrls: ['./crear3.page.scss'],
 })
-export class Crear3Page implements OnInit {
+export class Crear3Page {
   usuario: Usuario;
   constructor(
     private router: Router,
@@ -25,7 +25,7 @@ export class Crear3Page implements OnInit {
 
   @ViewChild(CameraImagePage, { static: false }) child: CameraImagePage;
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.data.currentMessage.subscribe((message) => {
       if (message != null) {
         this.usuario.imagenes[

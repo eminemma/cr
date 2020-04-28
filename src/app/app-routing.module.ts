@@ -64,6 +64,14 @@ const routes: Routes = [
   {
     path: 'conversacion',
     loadChildren: () => import('./components/conversacion/conversacion.module').then( m => m.ConversacionPageModule)
+  },
+  {
+    path: 'trackspotify',
+    loadChildren: () => import('./components/trackspotify/trackspotify.module').then( m => m.TrackspotifyPageModule)
+  },
+  {
+    path: 'artistspotify',
+    loadChildren: () => import('./components/artistspotify/artistspotify.module').then( m => m.ArtistspotifyPageModule)
   }
 ];
 @NgModule({

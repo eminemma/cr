@@ -95,6 +95,7 @@ export class ChildComponent {
   animateUp = true;
   @Input() cambiandoEstadoPerfil: Subject<number>;
   @Input() usuario: Usuario;
+  @Input() spotify: number;
   @Output() usuarioSeleccionada: EventEmitter<object> = new EventEmitter();
   x = 0;
   y = 0;
@@ -110,6 +111,8 @@ export class ChildComponent {
   imagenBase64: any;
   showSplash = true;
   widthInidicador: string = '10px';
+  
+
   constructor(
     private alertService: AlertService,
     public element: ElementRef,
@@ -120,9 +123,12 @@ export class ChildComponent {
     public modalController: ModalController,
     private chatService: ChatService,
     private usuarioService: UsuarioService
-  ) {}
+  ) {
+  
+  }
 
   ngAfterViewInit() {
+    console.log(this.usuario);
     let hammer = new window['Hammer'](this.element.nativeElement);
 
     hammer.on('pan', (ev) => {
@@ -140,8 +146,6 @@ export class ChildComponent {
   handleTap(ev) {
     const centro = this.element.nativeElement.offsetWidth / 2;
     const xTap = ev.center.x;
-    console.log('centro');
-    console.log(this.element.nativeElement);
     if (centro < xTap) {
       this.showNextImage();
     } else {
@@ -260,7 +264,6 @@ export class ChildComponent {
   }
 
   superLike() {
-    console.log('animar superlike');
     this.startAnimationSuperLike();
   }
 
@@ -285,12 +288,10 @@ export class ChildComponent {
   }
 
   ngOnInit() {
-    console.log('Imagen inicial');
-    console.log(this.usuario.imagenes);
+    console.log('enntra');
     this.buscarImagen(0);
     this.widthInidicador =
       (240 / this.usuario.imagenes.length).toString() + 'px';
-    console.log(this.widthInidicador);
 
     this.cambiandoEstadoPerfil.subscribe((v) => {
       if (v === 0) {

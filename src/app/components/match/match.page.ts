@@ -12,7 +12,7 @@ import { UsuarioService } from "src/app/services/usuario.service";
   templateUrl: './match.page.html',
   styleUrls: ['./match.page.scss'],
 })
-export class MatchPage implements OnInit {
+export class MatchPage {
   usuarioPrimero: Usuario;
   usuarioDos: Usuario;
 
@@ -29,7 +29,7 @@ export class MatchPage implements OnInit {
       this.usuario_segundo_id = this.navParams.get('usuario_segundo_id') ;
     }
 
-  ngOnInit() {
+    ionViewWillEnter() {
     this.usuarioService.getUsuario(this.usuario_primer_id).subscribe(user => {
       this.usuarioPrimero = user;
     });

@@ -14,13 +14,16 @@ export class Usuario {
   public edadBusquedaMin: number;
   public edadBusquedaMax: number;
 
-  //coordenadas
+  // coordenadas
   public x: number;
   public y: number;
 
-  //device para mandar mensaje
+  // device para mandar mensaje
   public idDevice: any;
 
-  //spotify id
-  public idSpotify: string;
+  // spotify track id
+  public idSpotifyMeGusta: string;
+
+  // spotify artist id
+  public idSpotifyArtist: string;
 }

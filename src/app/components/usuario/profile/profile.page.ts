@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage  {
   imagenes: ImagenCamera[];
   constructor(
     private dragulaService: DragulaService,
@@ -25,7 +25,7 @@ export class ProfilePage implements OnInit {
     this.dragulaService.createGroup('bag', {});
   }
 
-  ngOnInit() {}
+  ionViewWillEnter() {}
 
   onRenderItems(event) {
     console.log(`Moving item from ${event.detail.from} to ${event.detail.to}`);

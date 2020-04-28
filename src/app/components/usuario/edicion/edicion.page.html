@@ -1,12 +1,10 @@
 <ion-content>
   <section>
-    <ion-button expand="block" (click)="loginSpotify()">Spotify</ion-button>
-
     <ion-list>
       <ion-list-header>
         Preferencias
       </ion-list-header>
-      <ion-item >
+      <ion-item>
         <ion-label>Fotos</ion-label>
       </ion-item>
       <ion-item>
@@ -33,27 +31,50 @@
             </camera-image-component>
           </div>
         </div>
-        <ul>
+        <!--<ul>
           <li *ngFor="let track of tracks; let i = index">
             <img src="{{track.images[2].url}}" alt="" />
           </li>
-        </ul>
+        </ul>-->
       </ion-item>
-      <ion-item >
+      <ion-item>
         <ion-label>Spotify</ion-label>
       </ion-item>
-      
-      <ion-item>
-        <ion-label>Musica mas afin contigo</ion-label>
-        <ion-toggle
-        slot="start"
-        name="sexoHombre"
-        color="light"
-        [(ngModel)]="sexoHombre"
-        ng-checked="sexoHombre"
-      ></ion-toggle>
+
+      <ion-button expand="full" (click)="seleccionarCancionFavorita()" color="light">
+        <ion-icon slot="end" name="star"></ion-icon>
+        Seleccionar tu cancion</ion-button
+      >
+      <ion-list>
+        <ion-item *ngIf="track">
+          <ion-img slot="start" [src]="track.album.images[2].url"></ion-img>
+          <ion-label>{{track.album.name}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+
+    <ion-button  expand="full" (click)="seleccionarArtistaFavorito()" color="light">
+      <ion-icon slot="end" name="star"></ion-icon>
+      Seleccionar tu artista</ion-button
+    >
+
+    <ion-list>
+      <ion-item *ngIf="artist">
+        <ion-img slot="start" style="width: 64px;" [src]="artist.images[2].url"></ion-img>
+        <ion-label>{{artist.name}}</ion-label>
       </ion-item>
     </ion-list>
+
+    <ion-button expand="full" (click)="loginInstagram()" color="light">
+      <ion-icon slot="end" name="star"></ion-icon>
+      Ingresar Instagra</ion-button
+    >
+    <ul  *ngFor="let media of mediaInstagrams">
+      <li>
+        <img src="{{media.media_url}}" alt="">
+      </li>
+    </ul>
+    <pre></pre>
   </section>
 
   <!--<cropp-edicion></cropp-edicion>-->

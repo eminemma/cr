@@ -1,0 +1,17 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Tu artista favorito</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="buscando($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <ion-list>
+    <ion-item *ngFor="let artist of artists;" (click)="artistaFavortia(artist)">
+      <ion-img slot="start" style="width: 64px;" [src]="artist.images[2].url"></ion-img>
+      <ion-label>{{artist.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -8,7 +8,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './crear2.page.html',
   styleUrls: ['./crear2.page.scss'],
 })
-export class Crear2Page implements OnInit {
+export class Crear2Page {
   usuario: Usuario;
   private usuarioForm: FormGroup;
   constructor(private router: Router, private formBuilder: FormBuilder) {
@@ -19,7 +19,7 @@ export class Crear2Page implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ionViewWillEnter() {}
 
   siguiente() {
     if (this.usuarioForm.dirty && this.usuarioForm.valid) {

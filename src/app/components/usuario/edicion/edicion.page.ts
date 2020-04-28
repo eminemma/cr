@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { CameraImagePage } from 'src/app/components/usuario/crear3/camera-image';
 import { Usuario } from 'src/app/models/Usuario';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -10,9 +11,18 @@ import { ImagenCamera } from 'src/app/models/ImagenCamera';
 
 import { DragulaService } from 'ng2-dragula';
 import { DataService } from 'src/app/services/data.service';
-import { LoadingController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import {
+  LoadingController,
+  ModalController,
+  AlertController,
+} from '@ionic/angular';
 import { SpotifyService } from 'src/app/services/spotify.service';
+import { InstagramService } from 'src/app/services/instagram.service';
+import { TrackspotifyPage } from 'src/app/components/trackspotify/trackspotify.page';
+import { ArtistspotifyPage } from 'src/app/components/artistspotify/artistspotify.page';
+import { MediaInstagram } from 'src/app/models/MediaInstagram';
+import { map } from 'rxjs/operators';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-edicion',
@@ -23,17 +33,22 @@ export class EdicionPage implements OnInit {
   usuario: Usuario;
   indexHabilitar: number;
   loader: any;
-  
-  tracks: any[];
+
+  track: any;
+  artist: any;
+
+  mediaInstagrams: MediaInstagram[];
   @ViewChild(CameraImagePage, { static: false }) child: CameraImagePage;
   constructor(
     private usuarioService: UsuarioService,
+    private instagramService: InstagramService,
     private fireAuth: AngularFireAuth,
     private dragulaService: DragulaService,
     private data: DataService,
     private loadingController: LoadingController,
     public alertController: AlertController,
-    public spotifyService: SpotifyService
+    public spotifyService: SpotifyService,
+    public modalController: ModalController
   ) {
     this.usuario = new Usuario();
     this.indexHabilitar = 0;
@@ -99,6 +114,40 @@ export class EdicionPage implements OnInit {
       revertOnSpill: false, // spilling will put the element back where it was dragged from, if this is true
       removeOnSpill: false, // spilling will `.remove` the element, if this is true
     });
+  }
+  ionViewWillEnter() {
+    this.traerCancionFavorita();
+    this.traerArtistaFavorito();
+
+    /*
+import {concatMap, tap} from 'rxjs/operators';
+
+this.http.get('http://test.localhost/api.php?timeout=1')
+      .pipe(
+        tap(res => console.log('First result', res)),
+        concatMap((res: { timeout: number }) => this.http.get(`http://test.localhost/api.php?timeout=${+res.timeout + 1}`)),
+        tap(res => console.log('Second result', res)),
+        concatMap((res: { timeout: number }) => this.http.get(`http://test.localhost/api.php?timeout=${+res.timeout + 3}`)),
+        tap(res => console.log('Third result', res)),
+      )
+      .subscribe(res => console.log('Latest result', res));
+*/
+    this.instagramService
+      .obtenerMediaReciente()
+      .subscribe((mediaInstagrams: any) => {
+        this.mediaInstagrams = mediaInstagrams.data as MediaInstagram[];
+        this.mediaInstagrams.forEach((media: MediaInstagram, index: number) => {
+          this.instagramService.llenerMediaId(media.id).subscribe(
+            (mediaData) => {
+              media.media_type = mediaData.media_type;
+              media.media_url = mediaData.media_url;
+              media.timestamp = mediaData.timestamp;
+              console.log(this.mediaInstagrams);
+            },
+            (error) => console.log(error)
+          );
+        });
+      });
   }
 
   cargarDatos() {
@@ -168,7 +217,9 @@ export class EdicionPage implements OnInit {
     await alert.present();
   }
 
-  loginSpotify() {
+  seleccionarCancionFavorita() {
+    //
+
     this.spotifyService
       .loginSpotify()
       .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
@@ -177,18 +228,95 @@ export class EdicionPage implements OnInit {
           expires_in: expiresAt,
           ref: encryptedRefreshToken,
         };
-        console.log(result);
-        console.log('Buscar datos del usuario');
 
+        this.modalTemaFavorito(accessToken);
+      });
+  }
+
+  seleccionarArtistaFavorito() {
+    //
+
+    this.spotifyService
+      .loginSpotify()
+      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+        let result = {
+          access_token: accessToken,
+          expires_in: expiresAt,
+          ref: encryptedRefreshToken,
+        };
+
+        this.modalArtistaFavorito(accessToken);
+      });
+  }
+
+  async modalTemaFavorito(tokenR) {
+    const modal = await this.modalController.create({
+      component: TrackspotifyPage,
+      componentProps: {
+        token: tokenR,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      this.traerCancionFavorita();
+    });
+    return await modal.present();
+  }
+
+  async modalArtistaFavorito(tokenR) {
+    const modal = await this.modalController.create({
+      component: ArtistspotifyPage,
+      componentProps: {
+        token: tokenR,
+      },
+    });
+    modal.onDidDismiss().then((data) => {
+      this.traerArtistaFavorito();
+    });
+    return await modal.present();
+  }
+
+  traerCancionFavorita() {
+    this.spotifyService
+      .loginSpotify()
+      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+        let result = {
+          access_token: accessToken,
+          expires_in: expiresAt,
+          ref: encryptedRefreshToken,
+        };
         this.spotifyService
-          .traerUsuarioPlaylist(accessToken)
+          .traerMusicaFavortia(accessToken, this.fireAuth.auth.currentUser.uid)
           .subscribe(
-            (tracks: any) => {
-              this.tracks = tracks.items;
-              console.log(tracks);
-            },
+            (track) => (this.track = track),
             (error) => console.log(error)
           );
       });
+  }
+
+  traerArtistaFavorito() {
+    this.spotifyService
+      .loginSpotify()
+      .then(({ accessToken, encryptedRefreshToken, expiresAt }) => {
+        let result = {
+          access_token: accessToken,
+          expires_in: expiresAt,
+          ref: encryptedRefreshToken,
+        };
+        this.spotifyService
+          .traerArtistaFavorito(accessToken, this.fireAuth.auth.currentUser.uid)
+          .subscribe(
+            (artist) => (this.artist = artist),
+            (error) => console.log(error)
+          );
+      });
+  }
+
+  loginInstagram() {
+    /*this.instagramService.obtenerCodeAutorizacion().subscribe(
+      (done: any) => console.log(done.url),
+      (error: any) => console.log(error.url)
+    );*/
+
+    this.instagramService.obtenerCodeAutorizacion();
   }
 }

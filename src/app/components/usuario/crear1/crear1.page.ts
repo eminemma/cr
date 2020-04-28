@@ -13,7 +13,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   templateUrl: './crear1.page.html',
   styleUrls: ['./crear1.page.scss'],
 })
-export class Crear1Page implements OnInit {
+export class Crear1Page {
   usuario: Usuario;
   imagenes: ImagenCamera[];
   usuarioNombre: string;
@@ -72,7 +72,7 @@ export class Crear1Page implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ionViewWillEnter() {}
   validarSeleccionarSexo() {
     this.usuarioForm.controls['sexoHombre'].setErrors(null);
     this.usuarioForm.controls['sexoMujer'].setErrors(null);

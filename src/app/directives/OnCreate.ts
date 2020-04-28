@@ -7,7 +7,7 @@ export class OnCreate {
 
   @Output() onCreate: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
-  ngOnInit() {      
+  ionViewWillEnter() {      
      this.onCreate.emit('dummy'); 
   } 
 

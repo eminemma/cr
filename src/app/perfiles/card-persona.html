@@ -1,36 +1,58 @@
-
- <ion-card class="card"
+<ion-card
+  class="card"
   [@slideLike]="animateLike ? 'open' : 'right'"
   [@slideNotLike]="animateNotLike ? 'open' : 'left'"
   [@slideSuperLike]="animateSuperLike ? 'open' : 'up'"
   (@slideLike.done)="finishAnimationLike()"
-  (@slideNotLike.done)="finishAnimationNotLike()"  
-  (@slideSuperLike.done)="finishAnimationSuperLike()" 
-    style="width: 95%;"
-  >
+  (@slideNotLike.done)="finishAnimationNotLike()"
+  (@slideSuperLike.done)="finishAnimationSuperLike()"
+  style="width: 95%;"
+>
   <div *ngIf="showSplash" class="splash">
     <div class="spinner">
       <div class="double-bounce1"></div>
       <div class="double-bounce2"></div>
     </div>
   </div>
-  
-    <ul>
-      <li *ngFor="let item of usuario.imagenes;let i = index">
-     
-        <img 
-          *ngIf="i == counter"
-          (swiperight)="startAnimationLike()"
-          (swipeleft)="startAnimationNotLike()"
-          (swipeup)="showNextImage()"
-          (swipedown)="showPreviousImage()"
-          [src]="imagenBase64"
-          style="width: 100%;"
-        />
-        <!--<ng-adsense [adClient]="'ca-pub-4846024327481940'" [pageLevelAds]="true"></ng-adsense>-->
-      </li>
-      <div class="carousel-indicador">
-        <div>
+
+  <ul>
+    <li *ngFor="let item of usuario.imagenes;let i = index">
+      <img
+        *ngIf="i == counter"
+        (swiperight)="startAnimationLike()"
+        (swipeleft)="startAnimationNotLike()"
+        (swipeup)="showNextImage()"
+        (swipedown)="showPreviousImage()"
+        [src]="imagenBase64"
+        style="width: 100%;"
+      />
+      <ul
+        *ngIf="spotify == i && i == counter"
+        style="position: absolute; top: 370px;"
+      >
+        <li style="width: 57px; margin-right: 10px;">
+          <img
+            src="https://i.scdn.co/image/ab67616d00001e02454aa3553174e182c2839fae"
+            alt=""
+          />
+        </li>
+        <li style="width: 57px; margin-right: 10px;">
+          <img
+            src="https://i.scdn.co/image/ab67616d00001e02454aa3553174e182c2839fae"
+            alt=""
+          />
+        </li>
+        <li style="width: 57px; margin-right: 10px;">
+          <img
+            src="https://i.scdn.co/image/ab67616d00001e02454aa3553174e182c2839fae"
+            alt=""
+          />
+        </li>
+      </ul>
+      <!--<ng-adsense [adClient]="'ca-pub-4846024327481940'" [pageLevelAds]="true"></ng-adsense>-->
+    </li>
+    <div class="carousel-indicador">
+      <div>
         <div
           class="indicador"
           *ngFor="let item of usuario.imagenes;let i = index"
@@ -38,16 +60,13 @@
           [style.width]="widthInidicador"
         ></div>
       </div>
-      </div>
-    </ul>
-    <ion-card-header>
-      <ion-card-subtitle>{{usuario.distancia}}km de distancia</ion-card-subtitle>
-      <ion-card-title>{{usuario.nombre}}</ion-card-title>
-      <ion-card-content>
-        <!--{{usuario.descripcion}}-->
-      </ion-card-content>
-    </ion-card-header>
-   
-  </ion-card>
-  
-
+    </div>
+  </ul>
+  <ion-card-header>
+    <ion-card-subtitle>{{usuario.distancia}}km de distancia</ion-card-subtitle>
+    <ion-card-title>{{usuario.nombre}}</ion-card-title>
+    <ion-card-content>
+      <!--{{usuario.descripcion}}-->
+    </ion-card-content>
+  </ion-card-header>
+</ion-card>

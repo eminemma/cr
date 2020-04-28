@@ -5,11 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './politicas.page.html',
   styleUrls: ['./politicas.page.scss'],
 })
-export class PoliticasPage implements OnInit {
+export class PoliticasPage{
 
   constructor() { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
 }

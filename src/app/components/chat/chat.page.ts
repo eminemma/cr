@@ -14,7 +14,7 @@ import { ChatItemPage } from './chat-item';
   templateUrl: "./chat.page.html",
   styleUrls: ["./chat.page.scss"],
 })
-export class ChatPage implements OnInit {
+export class ChatPage{
   chats: Observable<Chat[]>;
   chats2: Observable<Chat[]>;
   mensaje: Observable<any>;
@@ -73,7 +73,7 @@ export class ChatPage implements OnInit {
   
 
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.buscarChatPrimerPersona();
     this.buscarChatSegundaPersona();
   }

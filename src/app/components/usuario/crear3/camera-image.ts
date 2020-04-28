@@ -13,7 +13,7 @@ import { Usuario } from 'src/app/models/Usuario';
   templateUrl: './camera-image.html',
   styleUrls: ['./camera-image.css'],
 })
-export class CameraImagePage implements OnInit {
+export class CameraImagePage {
   @Input() indexImagen: number;
   @Input() imagen: ImagenCamera;
   @Output() eliminarEvento: EventEmitter <object> = new EventEmitter();

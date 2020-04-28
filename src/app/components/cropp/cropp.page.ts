@@ -17,7 +17,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './cropp.page.html',
   styleUrls: ['./cropp.page.scss']
 })
-export class CroppPage implements OnInit {
+export class CroppPage{
   @ViewChild('imageSrc', { static: false }) imageElement: ElementRef;
   indexImagen: any;
   imageChangedEvent: any = '';
@@ -95,7 +95,7 @@ export class CroppPage implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
   }
 
   fileChangeEvent(event: any): void {

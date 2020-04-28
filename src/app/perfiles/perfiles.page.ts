@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { interval, Observable } from 'rxjs';
@@ -33,6 +33,8 @@ export class PerfilesPage {
   usuarios: Usuario[];
   usuario: Usuario;
   showSplash = true;
+  id: any;
+  mostrar: number;
   @ViewChild(ChildComponent, { static: true }) child: ChildComponent;
   constructor(
     private usuarioService: UsuarioService,
@@ -48,8 +50,15 @@ export class PerfilesPage {
   ) {
     this.usuarios = [];
     this.startBackgroundGeolocation();
+
+    this.mostrar = 0;
   }
-  async ngOnInit() {
+  ionViewWillLeave() {
+    console.log('destruir');
+    this.id.unsubscribe();
+  }
+
+  ionViewWillEnter() {
     /*
     ACTUALIZAR TOKEN DEVICE
     this.fcm.getToken().then(token => {
@@ -61,9 +70,9 @@ export class PerfilesPage {
         //this.alertService.presentToast(JSON.stringify(message));
       });
     });*/
-
+    
     // BUSCAR PERFILES
-    interval(1000).subscribe(() => {
+    this.id = interval(1000).subscribe(() => {
       console.log('buscando usurios' + this.usuarios.length);
       if (this.usuarios.length === 0) {
         this.showSplash = true;
@@ -71,6 +80,7 @@ export class PerfilesPage {
           .getUsuarios(this.fireAuth.auth.currentUser.uid)
           .subscribe((usuarios: Usuario[]) => {
             this.usuarios = usuarios;
+           
             if (this.usuarios.length > 0) this.showSplash = false;
           });
       }
@@ -159,11 +169,7 @@ export class PerfilesPage {
   }
 
   GetChildData(usuario) {
-    console.log('usaurios sin filtrados');
-    console.log(this.usuarios);
     this.usuarios = this.usuarios.filter((p) => p.id !== usuario.id);
-    console.log('usaurios filtrados');
-    console.log(this.usuarios);
   }
 
   like() {

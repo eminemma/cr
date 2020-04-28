@@ -14,7 +14,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './chat-item.html',
   styleUrls: ['./chat-item.css'],
 })
-export class ChatItemPage implements OnInit {
+export class ChatItemPage{
   @Input() chat: Chat;
   mensaje: Observable<Mensaje[]>;
   constructor(
@@ -24,7 +24,7 @@ export class ChatItemPage implements OnInit {
     private usuarioSerice: UsuarioService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.traerUltimosMensajesChat(this.chat.id);
     this.traerUsuarioChat(this.chat);
     //console.log(this.mensaje);

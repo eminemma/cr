@@ -69,8 +69,6 @@ export class UsuarioService {
     return this.http.get(this.env.API_URL + 'imagenBase64/' + id);
   }
 
-  guardarSpotifyId(usuario: Usuario): Observable<any> {
-    return this.http.post(this.env.API_URL + 'soptify', usuario);
-  }
+ 
 
 }

@@ -8,11 +8,12 @@
 
 <ion-content [fullscreen]="true">
   <div>
-    <div *ngFor="let item of usuarios">
+    <div *ngFor="let item of usuarios;let i = index">
       <card-persona-component
         [cambiandoEstadoPerfil]="estadoPerfil"
         style="display: block; width: 100%;"
         [usuario]="item"
+        [spotify]="mostrar"
         (usuarioSeleccionada)="GetChildData($event)"
       ></card-persona-component>
     </div>

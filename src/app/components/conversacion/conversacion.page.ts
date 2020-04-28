@@ -11,7 +11,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
   templateUrl: "./conversacion.page.html",
   styleUrls: ["./conversacion.page.scss"],
 })
-export class ConversacionPage implements OnInit {
+export class ConversacionPage {
   mensaje: Mensaje;
   idChat: string;
   mensajes: Observable<Mensaje[]>;
@@ -29,7 +29,7 @@ export class ConversacionPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     /*interval(1000).subscribe(() => {
      this.buscarMensajes();
     });*/

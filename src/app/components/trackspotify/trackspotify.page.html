@@ -1,0 +1,17 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Tu tema favorito</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="buscando($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <ion-list>
+    <ion-item *ngFor="let track of tracks;" (click)="imagenFavortia(track)">
+      <ion-img slot="start" [src]="track.album.images[2].url"></ion-img>
+      <ion-label>{{track.album.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
