@@ -139,14 +139,18 @@ this.http.get('http://test.localhost/api.php?timeout=1')
         this.mediaInstagrams.forEach((media: MediaInstagram, index: number) => {
           this.instagramService.llenerMediaId(media.id).subscribe(
             (mediaData) => {
+              console.log('Media data');
+              console.log(mediaData);
               media.media_type = mediaData.media_type;
               media.media_url = mediaData.media_url;
               media.timestamp = mediaData.timestamp;
-              console.log(this.mediaInstagrams);
+             
             },
             (error) => console.log(error)
           );
         });
+        console.log('Instagram Edicion');
+        console.log(this.mediaInstagrams);
       });
   }
 

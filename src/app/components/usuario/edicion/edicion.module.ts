@@ -13,6 +13,8 @@ import { TrackspotifyPageModule } from 'src/app/components/trackspotify/trackspo
 import { TrackspotifyPage } from 'src/app/components/trackspotify/trackspotify.page';
 import { ArtistspotifyPageModule } from 'src/app/components/artistspotify/artistspotify.module';
 import { ArtistspotifyPage } from 'src/app/components/artistspotify/artistspotify.page';
+
+import { InstlastphotosPage } from 'src/app/components/instlastphotos/instlastphotos.page';
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +27,7 @@ import { ArtistspotifyPage } from 'src/app/components/artistspotify/artistspotif
     DragulaModule.forRoot()
   ],
   entryComponents: [ TrackspotifyPage ],
-  declarations: [EdicionPage, CameraImagePage]
+  declarations: [EdicionPage, CameraImagePage, InstlastphotosPage]
 })
 export class EdicionModule {
 }

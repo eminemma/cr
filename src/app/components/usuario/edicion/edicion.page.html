@@ -1,9 +1,11 @@
 <ion-content>
+  <ion-toolbar>
+    <ion-title>
+      Preferencias
+    </ion-title>
+  </ion-toolbar>
   <section>
     <ion-list>
-      <ion-list-header>
-        Preferencias
-      </ion-list-header>
       <ion-item>
         <ion-label>Fotos</ion-label>
       </ion-item>
@@ -12,12 +14,7 @@
           <div
             [ngClass]="{'test': imagen.src === undefined}"
             *ngFor="let imagen of usuario.imagenes; let i = index"
-            style="
-              width: 25%;
-              float: left;
-              padding-top: 10px;
-              padding-left: 10px;
-            "
+            class="content-photo"
             [attr.position]="i"
             [attr.id]="imagen.id"
           >
@@ -41,7 +38,11 @@
         <ion-label>Spotify</ion-label>
       </ion-item>
 
-      <ion-button expand="full" (click)="seleccionarCancionFavorita()" color="light">
+      <ion-button
+        expand="full"
+        (click)="seleccionarCancionFavorita()"
+        color="light"
+      >
         <ion-icon slot="end" name="star"></ion-icon>
         Seleccionar tu cancion</ion-button
       >
@@ -53,27 +54,39 @@
       </ion-list>
     </ion-list>
 
-    <ion-button  expand="full" (click)="seleccionarArtistaFavorito()" color="light">
+    <ion-button
+      expand="full"
+      (click)="seleccionarArtistaFavorito()"
+      color="light"
+    >
       <ion-icon slot="end" name="star"></ion-icon>
       Seleccionar tu artista</ion-button
     >
 
     <ion-list>
       <ion-item *ngIf="artist">
-        <ion-img slot="start" style="width: 64px;" [src]="artist.images[2].url"></ion-img>
+        <ion-img
+          slot="start"
+          style="width: 64px;"
+          [src]="artist.images[2].url"
+        ></ion-img>
         <ion-label>{{artist.name}}</ion-label>
       </ion-item>
     </ion-list>
-
+    <ion-item>
+      <ion-label>Instagram</ion-label>
+    </ion-item>
     <ion-button expand="full" (click)="loginInstagram()" color="light">
       <ion-icon slot="end" name="star"></ion-icon>
       Ingresar Instagra</ion-button
     >
-    <ul  *ngFor="let media of mediaInstagrams">
+
+    <app-instlastphotos [mediaInstagrams]="mediaInstagrams"></app-instlastphotos>
+    <!--<ul *ngFor="let media of mediaInstagrams">
       <li>
-        <img src="{{media.media_url}}" alt="">
+        <img src="{{media.media_url}}" alt="" />
       </li>
-    </ul>
+    </ul>-->
     <pre></pre>
   </section>
 

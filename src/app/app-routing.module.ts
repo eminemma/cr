@@ -72,6 +72,10 @@ const routes: Routes = [
   {
     path: 'artistspotify',
     loadChildren: () => import('./components/artistspotify/artistspotify.module').then( m => m.ArtistspotifyPageModule)
+  },
+  {
+    path: 'instlastphotos',
+    loadChildren: () => import('./components/instlastphotos/instlastphotos.module').then( m => m.InstlastphotosPageModule)
   }
 ];
 @NgModule({
